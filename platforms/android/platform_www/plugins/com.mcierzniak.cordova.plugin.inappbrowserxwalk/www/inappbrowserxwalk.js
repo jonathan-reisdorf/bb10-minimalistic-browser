@@ -24,6 +24,9 @@ InAppBrowserXwalk.prototype = {
   loadUrl: function(url) {
     cordova.exec(null, null, 'InAppBrowserXwalk', 'loadUrl', [url]);
   },
+  resize: function(height) {
+    cordova.exec(null, null, 'InAppBrowserXwalk', 'resize', [height]);
+  },
   executeScript: function (injectDetails, cb) {
     if (injectDetails.code) {
       cordova.exec(cb, null, 'InAppBrowserXwalk', 'injectScriptCode', [injectDetails.code, !!cb]);
