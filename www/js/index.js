@@ -33,6 +33,14 @@ class BB10Browser {
       navigationUrlEl.blur();
     });
 
+    navigationUrlEl.addEventListener('focus', () => {
+      this.browser.setFocusable(false);
+    });
+
+    navigationUrlEl.addEventListener('blur', () => {
+      this.browser.setFocusable(true);
+    });
+
     window.addEventListener('resize', event => {
       this.browser.resize(this._getContentHeight());
     });

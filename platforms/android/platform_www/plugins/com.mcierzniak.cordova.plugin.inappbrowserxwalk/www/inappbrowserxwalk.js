@@ -27,6 +27,9 @@ InAppBrowserXwalk.prototype = {
   resize: function(height) {
     cordova.exec(null, null, 'InAppBrowserXwalk', 'resize', [height]);
   },
+  setFocusable: function(focusable = true) {
+    cordova.exec(null, null, 'InAppBrowserXwalk', 'setFocusable', [!!focusable]);
+  },
   executeScript: function (injectDetails, cb) {
     if (injectDetails.code) {
       cordova.exec(cb, null, 'InAppBrowserXwalk', 'injectScriptCode', [injectDetails.code, !!cb]);
