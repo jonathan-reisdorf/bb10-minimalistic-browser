@@ -5,11 +5,11 @@ document.addEventListener('deviceready', () => {
     height: viewportHeight - Math.ceil(viewportHeight * 0.1)
   });
 
+  const navigationFormEl = document.querySelector('.navigation');
   const navigationUrlEl = document.querySelector('.navigation__url');
-  navigationUrlEl.addEventListener('keyup', event => {
-    if (event.code === 'Enter') {
-      browser.loadUrl(navigationUrlEl.value);
-      navigationUrlEl.blur();
-    }
+
+  navigationFormEl.addEventListener('submit', () => {
+    browser.loadUrl(navigationUrlEl.value);
+    navigationUrlEl.blur();
   });
 }, false);
