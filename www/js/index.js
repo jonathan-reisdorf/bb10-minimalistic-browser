@@ -12,9 +12,16 @@ class BB10Browser {
     return window.innerHeight * window.devicePixelRatio;
   }
 
+  _getNavigationHeight(viewportHeight = null) {
+    viewportHeight = viewportHeight || this._getViewportHeight();
+    const calculatedHeight = Math.ceil(viewportHeight * 0.1);
+    const minHeight = 30 * window.devicePixelRatio;
+    return calculatedHeight > minHeight ? calculatedHeight : minHeight;
+  }
+
   _getContentHeight() {
     const viewportHeight = this._getViewportHeight();
-    return viewportHeight - Math.ceil(viewportHeight * 0.1);
+    return viewportHeight - this._getNavigationHeight(viewportHeight);
   }
 
   attachEvents() {
