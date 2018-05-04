@@ -1,0 +1,47 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation {
+    display: flex;
+    flex-flow: row nowrap;
+    background: #444;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.navigation__url {
+  flex: 1;
+  background: #222;
+  border: 0 none;
+  color: #fff;
+  text-indent: 0.5em;
+}
+
+.navigation__url:focus {
+  outline: none;
+}
+
+.navigation__indicator {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 3px;
+  width: 100%;
+  pointer-events: none;
+}
+
+.navigation__progress {
+  height: 3px;
+  width: 0;
+  background-color: #009cf5;
+}

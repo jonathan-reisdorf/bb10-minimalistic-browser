@@ -15,30 +15,3 @@ body {
     text-size-adjust: none;
     user-select: none;
 }
-
-.navigation {
-    position: fixed;
-    display: flex;
-    flex-flow: row nowrap;
-    background: #444;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 10vh;
-    min-height: 30px;
-    padding: 2px;
-    box-sizing: border-box;
-    z-index: 1;
-}
-
-.navigation__url {
-  flex: 1;
-  background: #222;
-  border: 0 none;
-  color: #fff;
-  text-indent: 0.5em;
-}
-
-.navigation__url:focus {
-  outline: none;
-}
