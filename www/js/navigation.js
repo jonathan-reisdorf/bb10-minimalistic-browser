@@ -5,9 +5,24 @@ class BB10BrowserNavigation {
   }
 
   openUrl(url) {
-    // this.updateUrl(url);
     this.loadUrl = null;
-    navigation.openUrl(url);
+    navigation.openUrl(this.determineUrl(url));
+  }
+
+  determineUrl(input) {
+    const isUrl = input.split('?')[0].indexOf(' ') === -1 && input.split('?')[0].indexOf('.') !== -1;
+    const containsProtocol = isUrl && input.indexOf('://') !== -1;
+
+    if (isUrl && containsProtocol) {
+      return input;
+    }
+
+    if (isUrl) {
+      return 'http://' + input;
+    }
+
+    const search = encodeURIComponent(input);
+    return `https://www.google.com/search?q=${search}&oq=${search}`;
   }
 
   updateUrl(url) {
