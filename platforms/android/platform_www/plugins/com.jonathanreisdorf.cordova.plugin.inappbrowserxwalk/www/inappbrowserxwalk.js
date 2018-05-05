@@ -1,3 +1,4 @@
+cordova.define("com.jonathanreisdorf.cordova.plugin.inappbrowserxwalk.inAppBrowserXwalk", function(require, exports, module) {
 /*global cordova, module*/
 
 function InAppBrowserXwalk() {
@@ -56,3 +57,5 @@ module.exports = {
     return new InAppBrowserXwalk();
   }
 };
+
+});

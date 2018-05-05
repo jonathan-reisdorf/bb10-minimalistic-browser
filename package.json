@@ -1,15 +1,15 @@
 {
-    "name": "com.fishlevel.bb_minimal_browser",
-    "displayName": "BBMinimalBrowser",
+    "name": "com.jonathanreisdorf.bb10_beol_minimal_browser",
+    "displayName": "BB10 BEOL",
     "version": "1.0.0",
-    "description": "MVP browser to bring crosswalk browsing to BB10",
+    "description": "MVP beyond-EOL browser to bring crosswalk browsing to BB10",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "license": "MIT",
     "dependencies": {
-        "com.mcierzniak.cordova.plugin.inappbrowserxwalk": "git+https://github.com/jonathan-reisdorf/cordova-plugin-inappbrowserxwalk.git",
+        "com.jonathanreisdorf.cordova.plugin.inappbrowserxwalk": "git+https://github.com/jonathan-reisdorf/cordova-plugin-inappbrowserxwalk.git",
         "cordova-android": "^7.0.0",
         "cordova-android-support-gradle-release": "^1.3.0",
         "cordova-plugin-crosswalk-webview": "^2.4.0",
@@ -25,10 +25,10 @@
                 "XWALK_MODE": "embedded",
                 "XWALK_MULTIPLEAPK": "true"
             },
-            "com.mcierzniak.cordova.plugin.inappbrowserxwalk": {},
             "cordova-android-support-gradle-release": {
                 "ANDROID_SUPPORT_VERSION": "18.+"
-            }
+            },
+            "com.jonathanreisdorf.cordova.plugin.inappbrowserxwalk": {}
         },
         "platforms": [
             "android"

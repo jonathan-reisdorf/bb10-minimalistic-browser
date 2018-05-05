@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.fishlevel.bb_minimal_browser" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.jonathanreisdorf.bb10_beol_minimal_browser" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>BBMinimalBrowser</name>
     <description>
         MVP browser to bring crosswalk browsing to BB10
@@ -27,9 +27,9 @@
         <variable name="XWALK_MODE" value="embedded" />
         <variable name="XWALK_MULTIPLEAPK" value="true" />
     </plugin>
-    <plugin name="com.mcierzniak.cordova.plugin.inappbrowserxwalk" spec="https://github.com/jonathan-reisdorf/cordova-plugin-inappbrowserxwalk.git" />
     <plugin name="cordova-android-support-gradle-release" spec="^1.3.0">
         <variable name="ANDROID_SUPPORT_VERSION" value="18.+" />
     </plugin>
+    <plugin name="com.jonathanreisdorf.cordova.plugin.inappbrowserxwalk" spec="https://github.com/jonathan-reisdorf/cordova-plugin-inappbrowserxwalk" />
     <engine name="android" spec="^7.0.0" />
 </widget>

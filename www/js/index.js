@@ -4,11 +4,6 @@ class BB10Browser {
       openHidden: false,
       navigationHeight: 40
     });
-
-    this.attachEvents();
-  }
-
-  attachEvents() {
   }
 }
 
