@@ -1,4 +1,4 @@
-# BB10 minimalistic browser (BBEOL)
+# BB10 minimalistic browser (BEOL)
 
 ## Prerequisites
 
