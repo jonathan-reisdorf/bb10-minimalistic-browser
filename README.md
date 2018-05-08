@@ -17,13 +17,18 @@ $ cp patches/* platforms/ -R
 $ cordova build
 ```
 
-If you run into trouble because cordova prepare did not do everything and e.g. cordova_plugins.js is missing, you can do this:
+If you run into trouble because cordova prepare did not do everything and e.g. you only see the splash screen of the application, do this:
 ```
 $ cordova platform remove android
 $ cordova platform add android
 $ cp patches/* platforms/ -R
 ```
 
+## Building
+
+Run `cordova build android`.
+It will create an apk in `platforms/android/app/build/outputs/apk/armv7/debug/app-armv7-debug.apk` which you can install on your BB10 device.
+
 ## Emulation
 
-Create an Android 4.3 avd and rum `cordova emulate android`.
+Create an Android 4.3 avd and run `cordova emulate android`.
