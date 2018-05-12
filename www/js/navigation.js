@@ -1,5 +1,54 @@
+class BB10BrowserNavigationActions {
+  constructor() {
+    this.elements = [...document.querySelectorAll('.js-navigationAction')];
+    this.activeEl = null;
+  }
+
+  attachEvents() {
+    this.elements.forEach(el => {
+      el.addEventListener('click', () => {
+        if (el.dataset.toggle) {
+          this.activeEl = this.activeEl ? null : el;
+        } else {
+          this.activeEl = null;
+        }
+
+        this.renderStatus();
+        this.execute(el);
+      });
+    });
+  }
+
+  renderStatus() {
+    const activeClassName = 'navigation__action--active';
+
+    this.elements.forEach(el => el.classList.remove(activeClassName));
+    if (this.activeEl) {
+      this.activeEl.classList.add(activeClassName);
+    }
+  }
+
+  execute(el) {
+    if (!el.dataset.action) {
+      return;
+    }
+
+    this[el.dataset.action]();
+  }
+
+  toggleTabsOverview() {
+    if (!this.activeEl) {
+      return navigation.closeTabsOverview();
+    }
+
+    return navigation.showTabsOverview();
+  }
+}
+
+
 class BB10BrowserNavigation {
   constructor(url) {
+    this.actions = new BB10BrowserNavigationActions();
     this.attachEvents();
     this.openUrl(url);
   }
@@ -35,8 +84,8 @@ class BB10BrowserNavigation {
   }
 
   attachEvents() {
-    const navigationFormEl = document.querySelector('.navigation');
-    const navigationUrlEl = document.querySelector('.navigation__url');
+    const navigationFormEl = document.querySelector('.js-navigationForm');
+    const navigationUrlEl = document.querySelector('.js-navigationUrl');
 
     navigationFormEl.addEventListener('submit', () => {
       this.openUrl(navigationUrlEl.value);
@@ -44,14 +93,14 @@ class BB10BrowserNavigation {
     });
 
     navigationUrlEl.addEventListener('focus', () => {
-      console.log('select!');
       navigationUrlEl.setSelectionRange(0, navigationUrlEl.value.length);
     });
 
     navigationUrlEl.addEventListener('blur', () => {
-      console.log('deselect!');
-      navigationUrlEl.setSelectionRange(0, 0);
+      setTimeout(() => navigationUrlEl.setSelectionRange(0, 0), 50);
     });
+
+    this.actions.attachEvents();
 
     window.onNavigationEvent = this.onNavigationEvent.bind(this);
   }

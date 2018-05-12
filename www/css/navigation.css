@@ -32,18 +32,22 @@ html, body {
   outline: none;
 }
 
+.navigation__url::selection {
+  background: #ffa800;
+}
+
 .navigation__indicator {
   display: none;
   position: absolute;
   left: 0;
   top: 0;
-  height: 3px;
+  height: 2px;
   width: 100%;
   pointer-events: none;
 }
 
 .navigation__progress {
-  height: 3px;
+  height: 2px;
   width: 0;
   background-color: #009cf5;
 }
@@ -57,6 +61,11 @@ html, body {
   background: #333;
   box-sizing: border-box;
   flex: none;
+  user-select: none;
+}
+
+.navigation__action:focus {
+  outline: none;
 }
 
 .navigation__icon {
