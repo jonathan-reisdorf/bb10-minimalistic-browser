@@ -116,6 +116,9 @@ class BB10BrowserNavigation {
       case 'loadprogress':
         this.setLoadProgress(event.progress);
         break;
+      case 'status':
+        this.setLoadInProgress(false, event.navigationUrl, event.navigationUrl);
+        break;
       default:
         console.log('unhandled event:', event);
     }
