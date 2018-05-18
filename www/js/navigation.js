@@ -1,12 +1,20 @@
 class BB10BrowserNavigationActions {
-  constructor() {
+  constructor(navigationReference) {
     this.elements = [...document.querySelectorAll('.js-navigationAction')];
     this.activeEl = null;
+    this.isPending = false;
+    this.navigationReference = navigationReference;
   }
 
   attachEvents() {
     this.elements.forEach(el => {
       el.addEventListener('click', () => {
+        if (this.isPending) {
+          return;
+        }
+
+        this.isPending = true;
+
         if (el.dataset.toggle) {
           this.activeEl = this.activeEl ? null : el;
         } else {
@@ -18,6 +26,7 @@ class BB10BrowserNavigationActions {
       });
     });
 
+    window.onSystemTabOpen = this.onSystemTabOpen.bind(this);
     window.onSystemTabClose = this.onSystemTabClose.bind(this);
   }
 
@@ -48,14 +57,23 @@ class BB10BrowserNavigationActions {
 
   onSystemTabClose() {
     this.activeEl = null;
+    this.isPending = false;
     this.renderStatus();
+    this.navigationReference.enableInput();
+  }
+
+  onSystemTabOpen() {
+    this.isPending = false;
+    this.navigationReference.disableInput();
   }
 }
 
 
 class BB10BrowserNavigation {
   constructor(url) {
-    this.actions = new BB10BrowserNavigationActions();
+    this.navigationUrlEl = document.querySelector('.navigation__url');
+
+    this.actions = new BB10BrowserNavigationActions(this);
     this.attachEvents();
     this.openUrl(url);
   }
@@ -92,7 +110,7 @@ class BB10BrowserNavigation {
 
   attachEvents() {
     const navigationFormEl = document.querySelector('.js-navigationForm');
-    const navigationUrlEl = document.querySelector('.js-navigationUrl');
+    const {navigationUrlEl} = this;
 
     navigationFormEl.addEventListener('submit', () => {
       this.openUrl(navigationUrlEl.value);
@@ -159,6 +177,14 @@ class BB10BrowserNavigation {
     const navigationProgressEl = document.querySelector('.navigation__progress');
     navigationProgressEl.style.width = this.loadProgress + '%';
     navigationIndicatorEl.style.display = 'block';
+  }
+
+  disableInput() {
+    this.navigationUrlEl.disabled = true;
+  }
+
+  enableInput() {
+    this.navigationUrlEl.disabled = false;
   }
 }
 

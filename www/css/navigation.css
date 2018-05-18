@@ -28,6 +28,10 @@ html, body {
   text-indent: 0.5em;
 }
 
+.navigation__url[disabled] {
+  color: #aaa;
+}
+
 .navigation__url:focus {
   outline: none;
 }
