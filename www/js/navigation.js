@@ -17,6 +17,8 @@ class BB10BrowserNavigationActions {
         this.execute(el);
       });
     });
+
+    window.onSystemTabClose = this.onSystemTabClose.bind(this);
   }
 
   renderStatus() {
@@ -42,6 +44,11 @@ class BB10BrowserNavigationActions {
     }
 
     return navigation.showTabsOverview();
+  }
+
+  onSystemTabClose() {
+    this.activeEl = null;
+    this.renderStatus();
   }
 }
 

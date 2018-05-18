@@ -36,14 +36,14 @@ class BB10BrowserTabs {
   }
 
   openTab(event) {
-    const index = this._getTabByEvent(event).dataset.index;
+    const index = parseInt(this._getTabByEvent(event).dataset.index, 10);
     tabs.openTab(index);
   }
 
   closeTab(event) {
     event.stopPropagation();
 
-    const index = this._getTabByEvent(event).dataset.index;
+    const index = parseInt(this._getTabByEvent(event).dataset.index, 10);
     tabs.closeTab(index, 'tabs.render');
   }
 
