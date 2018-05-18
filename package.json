@@ -1,7 +1,7 @@
 {
     "name": "com.jonathanreisdorf.bb10_beol_minimal_browser",
     "displayName": "BB10 BEOL",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "MVP beyond-EOL browser to bring crosswalk browsing to BB10",
     "main": "index.js",
     "scripts": {
