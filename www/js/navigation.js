@@ -1,5 +1,79 @@
+class BB10BrowserNavigationActions {
+  constructor(navigationReference) {
+    this.elements = [...document.querySelectorAll('.js-navigationAction')];
+    this.activeEl = null;
+    this.isPending = false;
+    this.navigationReference = navigationReference;
+  }
+
+  attachEvents() {
+    this.elements.forEach(el => {
+      el.addEventListener('click', () => {
+        if (this.isPending) {
+          return;
+        }
+
+        this.isPending = true;
+
+        if (el.dataset.toggle) {
+          this.activeEl = this.activeEl ? null : el;
+        } else {
+          this.activeEl = null;
+        }
+
+        this.renderStatus();
+        this.execute(el);
+      });
+    });
+
+    window.onSystemTabOpen = this.onSystemTabOpen.bind(this);
+    window.onSystemTabClose = this.onSystemTabClose.bind(this);
+  }
+
+  renderStatus() {
+    const activeClassName = 'navigation__action--active';
+
+    this.elements.forEach(el => el.classList.remove(activeClassName));
+    if (this.activeEl) {
+      this.activeEl.classList.add(activeClassName);
+    }
+  }
+
+  execute(el) {
+    if (!el.dataset.action) {
+      return;
+    }
+
+    this[el.dataset.action]();
+  }
+
+  toggleTabsOverview() {
+    if (!this.activeEl) {
+      return navigation.closeTabsOverview();
+    }
+
+    return navigation.showTabsOverview();
+  }
+
+  onSystemTabClose() {
+    this.activeEl = null;
+    this.isPending = false;
+    this.renderStatus();
+    this.navigationReference.enableInput();
+  }
+
+  onSystemTabOpen() {
+    this.isPending = false;
+    this.navigationReference.disableInput();
+  }
+}
+
+
 class BB10BrowserNavigation {
   constructor(url) {
+    this.navigationUrlEl = document.querySelector('.navigation__url');
+
+    this.actions = new BB10BrowserNavigationActions(this);
     this.attachEvents();
     this.openUrl(url);
   }
@@ -35,8 +109,8 @@ class BB10BrowserNavigation {
   }
 
   attachEvents() {
-    const navigationFormEl = document.querySelector('.navigation');
-    const navigationUrlEl = document.querySelector('.navigation__url');
+    const navigationFormEl = document.querySelector('.js-navigationForm');
+    const {navigationUrlEl} = this;
 
     navigationFormEl.addEventListener('submit', () => {
       this.openUrl(navigationUrlEl.value);
@@ -44,14 +118,14 @@ class BB10BrowserNavigation {
     });
 
     navigationUrlEl.addEventListener('focus', () => {
-      console.log('select!');
       navigationUrlEl.setSelectionRange(0, navigationUrlEl.value.length);
     });
 
     navigationUrlEl.addEventListener('blur', () => {
-      console.log('deselect!');
-      navigationUrlEl.setSelectionRange(0, 0);
+      setTimeout(() => navigationUrlEl.setSelectionRange(0, 0), 50);
     });
+
+    this.actions.attachEvents();
 
     window.onNavigationEvent = this.onNavigationEvent.bind(this);
   }
@@ -66,6 +140,9 @@ class BB10BrowserNavigation {
         break;
       case 'loadprogress':
         this.setLoadProgress(event.progress);
+        break;
+      case 'status':
+        this.setLoadInProgress(false, event.navigationUrl, event.navigationUrl);
         break;
       default:
         console.log('unhandled event:', event);
@@ -100,6 +177,14 @@ class BB10BrowserNavigation {
     const navigationProgressEl = document.querySelector('.navigation__progress');
     navigationProgressEl.style.width = this.loadProgress + '%';
     navigationIndicatorEl.style.display = 'block';
+  }
+
+  disableInput() {
+    this.navigationUrlEl.disabled = true;
+  }
+
+  enableInput() {
+    this.navigationUrlEl.disabled = false;
   }
 }
 
