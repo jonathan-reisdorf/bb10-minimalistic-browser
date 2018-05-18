@@ -37,18 +37,18 @@ class BB10BrowserTabs {
 
   openTab(event) {
     const index = this._getTabByEvent(event).dataset.index;
-    console.log('openTab', index);
+    tabs.openTab(index);
   }
 
   closeTab(event) {
     event.stopPropagation();
 
     const index = this._getTabByEvent(event).dataset.index;
-    console.log('closeTab', index);
+    tabs.closeTab(index, 'tabs.render');
   }
 
   addTab(event) {
-    console.log('addTab');
+    tabs.addTab('about:blank');
   }
 
   _getTabByEvent(event) {
