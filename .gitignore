@@ -1,6 +1,0 @@
-.idea
-node_modules
-/plugins
-!/plugins/*.json
-/platforms
-package-lock.json
