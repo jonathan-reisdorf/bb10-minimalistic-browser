@@ -1,0 +1,33 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "org.crossnode.bb10beol"
+        minSdkVersion 18
+        targetSdkVersion 27
+        versionCode 4
+        versionName "1.2.0"
+    }
+    buildTypes {
+        debug {
+            ndk {
+                abiFilters "armeabi-v7a", "armeabi", "x86"
+            }
+        }
+        release {
+            minifyEnabled false
+            proguardFiles 'proguard-rules.pro'
+            ndk {
+                abiFilters "armeabi-v7a", "armeabi"
+            }
+        }
+    }
+    buildToolsVersion '27.0.3'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation project(':crosswalk')
+}

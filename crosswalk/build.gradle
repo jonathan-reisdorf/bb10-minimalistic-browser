@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('crosswalk-24.53.595.0.aar'))
