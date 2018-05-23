@@ -10,9 +10,17 @@ android {
         versionName "1.2.0"
     }
     buildTypes {
+        debug {
+            ndk {
+                abiFilters "armeabi-v7a", "armeabi", "x86"
+            }
+        }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles 'proguard-rules.pro'
+            ndk {
+                abiFilters "armeabi-v7a", "armeabi"
+            }
         }
     }
     buildToolsVersion '27.0.3'
