@@ -20,7 +20,20 @@
         </svg>
     </button>
 
-    <input class="navigation__url js-navigationUrl" type="text" value="" placeholder="URL">
+    <button type="button" class="navigation__action navigation__action--hideableIcon navigation__action--hidden js-navigationAction" data-action="goPrev">
+        <svg class="navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+            <path d="M5 11.5L15.035 1 16 2.008 6.93 11.5 16 20.99 15.035 22z"/>
+        </svg>
+    </button>
+
+    <input class="navigation__url js-navigationUrl" type="text" value="" placeholder="URL / &#x1F50E;">
+
+    <button type="button" class="navigation__action navigation__action--hideableIcon navigation__action--hidden js-navigationAction" data-action="goNext">
+        <svg class="navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+            <path d="M7 2.008l9.07 9.491L7 20.99 7.965 22 18 11.5 7.965 1z"/>
+        </svg>
+    </button>
+
     <input type="submit" style="display: none">
 </form>
 

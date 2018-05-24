@@ -46,4 +46,24 @@ class NavigationJsInterface {
             }
         });
     }
+
+    @JavascriptInterface
+    public void goPrev() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                browserTabManager.currentResourceClient.goPrev();
+            }
+        });
+    }
+
+    @JavascriptInterface
+    public void goNext() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                browserTabManager.currentResourceClient.goNext();
+            }
+        });
+    }
 }

@@ -10,6 +10,7 @@ import org.xwalk.core.XWalkNavigationItem;
 
 
 class BrowserResourceClient extends XWalkResourceClient {
+    private XWalkView webview;
     private XWalkView navigationWebView;
 
     public boolean isActive = false;
@@ -18,44 +19,45 @@ class BrowserResourceClient extends XWalkResourceClient {
     BrowserResourceClient(XWalkView view, XWalkView navigationWebView) {
         super(view);
 
+        this.webview = view;
         this.navigationWebView = navigationWebView;
     }
 
     @Override
     public void onLoadStarted(XWalkView view, String url) {
-        if (!this.isActive) {
+        if (!isActive) {
             return;
         }
 
         try {
             JSONObject obj = new JSONObject();
-            this.addNavigationItemDetails(view, obj);
+            addNavigationItemDetails(obj);
             obj.put("type", "loadstart");
             obj.put("url", url);
 
-            this.onNavigationEvent(obj);
+            onNavigationEvent(obj);
         } catch (JSONException ex) {}
     }
 
     @Override
     public void onLoadFinished(XWalkView view, String url) {
-        if (!this.isActive) {
+        if (!isActive) {
             return;
         }
 
         try {
             JSONObject obj = new JSONObject();
-            this.addNavigationItemDetails(view, obj);
+            addNavigationItemDetails(obj);
             obj.put("type", "loadstop");
             obj.put("url", url);
 
-            this.onNavigationEvent(obj);
+            onNavigationEvent(obj);
         } catch (JSONException ex) {}
     }
 
     @Override
     public void onProgressChanged(XWalkView view, int progressInPercent) {
-        if (!this.isActive) {
+        if (!isActive) {
             return;
         }
 
@@ -64,17 +66,17 @@ class BrowserResourceClient extends XWalkResourceClient {
             obj.put("type", "loadprogress");
             obj.put("progress", progressInPercent);
 
-            this.onNavigationEvent(obj);
+            onNavigationEvent(obj);
         } catch (JSONException ex) {}
     }
 
     public JSONObject getNavigationItemDetails(XWalkNavigationItem navigationItem) {
         JSONObject obj = new JSONObject();
-        this.addNavigationItemDetails(navigationItem, obj);
+        addNavigationItemDetails(navigationItem, obj);
         return obj;
     }
 
-    public JSONObject addNavigationItemDetails(XWalkNavigationItem navigationItem, JSONObject obj) {
+    private JSONObject addNavigationItemDetails(XWalkNavigationItem navigationItem, JSONObject obj) {
         if (navigationItem == null) {
             return obj;
         }
@@ -88,32 +90,45 @@ class BrowserResourceClient extends XWalkResourceClient {
         return obj;
     }
 
-    public JSONObject addNavigationItemDetails(XWalkView view, JSONObject obj) {
-        XWalkNavigationHistory navigationHistory = view.getNavigationHistory();
+    private JSONObject addNavigationItemDetails(JSONObject obj) {
+        XWalkNavigationHistory navigationHistory = webview.getNavigationHistory();
+
+        try {
+            obj.put("navigationHasPrev", navigationHistory.canGoBack());
+            obj.put("navigationHasNext", navigationHistory.canGoForward());
+        } catch (JSONException ex) {}
 
         if (navigationHistory.size() < 1) {
             return obj;
         }
 
         XWalkNavigationItem navigationItem = navigationHistory.getCurrentItem();
-        return this.addNavigationItemDetails(navigationItem, obj);
+        return addNavigationItemDetails(navigationItem, obj);
     }
 
-    public void broadcastNavigationItemDetails(XWalkView view) {
+    public void broadcastNavigationItemDetails() {
         try {
             JSONObject obj = new JSONObject();
-            this.addNavigationItemDetails(view, obj);
+            addNavigationItemDetails(obj);
             obj.put("type", "status");
 
-            this.onNavigationEvent(obj);
+            onNavigationEvent(obj);
         } catch (JSONException ex) {}
     }
 
     public void onNavigationEvent(JSONObject obj) {
-        this.triggerJavascriptHandler("onNavigationEvent", obj);
+        triggerJavascriptHandler("onNavigationEvent", obj);
     }
 
     public void triggerJavascriptHandler(String handlerName, JSONObject obj) {
-        this.navigationWebView.evaluateJavascript("window." + handlerName + " && window." + handlerName + "(" + obj + ")", null);
+        navigationWebView.evaluateJavascript("window." + handlerName + " && window." + handlerName + "(" + obj + ")", null);
+    }
+
+    public void goPrev() {
+        webview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
+    }
+
+    public void goNext() {
+        webview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD,1);
     }
 }

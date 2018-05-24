@@ -68,13 +68,27 @@ html, body {
   user-select: none;
 }
 
+.navigation__action--hideableIcon {
+  width: calc(1em + 23px);
+  transition: width 0.3s, padding 0.3s, margin 0.3s;
+  overflow: hidden;
+}
+
+.navigation__action--hidden {
+  width: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
 .navigation__action:focus {
   outline: none;
 }
 
 .navigation__icon {
   display: block;
-  height: 100%;
+  height: 23px;
+  width: 23px;
   fill: #fff;
   transition: fill 0.3s;
 }

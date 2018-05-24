@@ -18,9 +18,9 @@ public class BrowserTabManager {
     private ArrayList<XWalkView> tabs = new ArrayList<>();
     private ArrayList<BrowserResourceClient> resourceClients = new ArrayList<>();
 
-    private XWalkView currentTab = null;
+    public XWalkView currentTab = null;
     private XWalkView previousTab = null;
-    private BrowserResourceClient currentResourceClient = null;
+    public BrowserResourceClient currentResourceClient = null;
     private BrowserResourceClient previousResourceClient = null;
 
     private Activity activity;
@@ -144,7 +144,7 @@ public class BrowserTabManager {
         }
 
         currentResourceClient.isActive = true;
-        currentResourceClient.broadcastNavigationItemDetails(currentTab);
+        currentResourceClient.broadcastNavigationItemDetails();
 
         mainLayout.removeViewAt(0);
         mainLayout.addView(currentTab, 0);
