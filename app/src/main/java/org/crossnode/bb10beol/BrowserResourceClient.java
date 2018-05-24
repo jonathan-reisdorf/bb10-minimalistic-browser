@@ -10,8 +10,8 @@ import org.xwalk.core.XWalkNavigationItem;
 
 
 class BrowserResourceClient extends XWalkResourceClient {
+    private XWalkView webview;
     private XWalkView navigationWebView;
-    private XWalkNavigationHistory navigationHistory;
 
     public boolean isActive = false;
     public boolean isSystem = false;
@@ -19,8 +19,8 @@ class BrowserResourceClient extends XWalkResourceClient {
     BrowserResourceClient(XWalkView view, XWalkView navigationWebView) {
         super(view);
 
+        this.webview = view;
         this.navigationWebView = navigationWebView;
-        this.navigationHistory = view.getNavigationHistory();
     }
 
     @Override
@@ -91,6 +91,8 @@ class BrowserResourceClient extends XWalkResourceClient {
     }
 
     private JSONObject addNavigationItemDetails(JSONObject obj) {
+        XWalkNavigationHistory navigationHistory = webview.getNavigationHistory();
+
         try {
             obj.put("navigationHasPrev", navigationHistory.canGoBack());
             obj.put("navigationHasNext", navigationHistory.canGoForward());
@@ -114,7 +116,7 @@ class BrowserResourceClient extends XWalkResourceClient {
         } catch (JSONException ex) {}
     }
 
-    private void onNavigationEvent(JSONObject obj) {
+    public void onNavigationEvent(JSONObject obj) {
         triggerJavascriptHandler("onNavigationEvent", obj);
     }
 
@@ -123,10 +125,10 @@ class BrowserResourceClient extends XWalkResourceClient {
     }
 
     public void goPrev() {
-        navigationHistory.navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
+        webview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
     }
 
     public void goNext() {
-        navigationHistory.navigate(XWalkNavigationHistory.Direction.FORWARD,1);
+        webview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD,1);
     }
 }

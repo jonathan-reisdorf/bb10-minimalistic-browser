@@ -13,8 +13,6 @@ class BB10BrowserNavigationActions {
           return;
         }
 
-        this.isPending = true;
-
         if (el.dataset.toggle) {
           this.activeEl = this.activeEl ? null : el;
         } else {
@@ -48,6 +46,8 @@ class BB10BrowserNavigationActions {
   }
 
   toggleTabsOverview() {
+    this.isPending = true;
+
     if (!this.activeEl) {
       return navigation.closeTabsOverview();
     }
