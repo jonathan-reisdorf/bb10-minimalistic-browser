@@ -55,6 +55,14 @@ class BB10BrowserNavigationActions {
     return navigation.showTabsOverview();
   }
 
+  goPrev() {
+    navigation.goPrev();
+  }
+
+  goNext() {
+    navigation.goNext();
+  }
+
   onSystemTabClose() {
     this.activeEl = null;
     this.isPending = false;
@@ -65,6 +73,34 @@ class BB10BrowserNavigationActions {
   onSystemTabOpen() {
     this.isPending = false;
     this.navigationReference.disableInput();
+  }
+
+  updatePrev(show) {
+    if (this.isPrevShown === show) {
+      return;
+    }
+
+    this.isPrevShown = show;
+    this.updateHideable('goPrev', show);
+  }
+
+  updateNext(show) {
+    if (this.isNextShown === show) {
+      return;
+    }
+
+    this.isNextShown = show;
+    this.updateHideable('goNext', show);
+  }
+
+  updateHideable(action, show) {
+    const targetEl = this.elements.find(el => el.dataset.action === action);
+
+    if (!targetEl) {
+      return;
+    }
+
+    targetEl.classList[show ? 'remove' : 'add']('navigation__action--hidden');
   }
 }
 
@@ -131,7 +167,11 @@ class BB10BrowserNavigation {
   }
 
   onNavigationEvent(event) {
-    switch(event && event.type) {
+    if (!event) {
+      return;
+    }
+
+    switch(event.type) {
       case 'loadstart':
         this.setLoadInProgress(true, event.url, event.navigationUrl);
         break;
@@ -146,6 +186,18 @@ class BB10BrowserNavigation {
         break;
       default:
         console.log('unhandled event:', event);
+    }
+
+    this.onNavigationHistoryEvent(event);
+  }
+
+  onNavigationHistoryEvent(event) {
+    if (typeof event.navigationHasPrev !== 'undefined') {
+      this.actions.updatePrev(event.navigationHasPrev);
+    }
+
+    if (typeof event.navigationHasNext !== 'undefined') {
+      this.actions.updateNext(event.navigationHasNext);
     }
   }
 

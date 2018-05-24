@@ -38,11 +38,21 @@ class NavigationJsInterface {
     }
 
     @JavascriptInterface
-    public void closeTabsOverview() {
+    public void goPrev() {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                browserTabManager.closeSystemTab();
+                browserTabManager.currentResourceClient.goPrev();
+            }
+        });
+    }
+
+    @JavascriptInterface
+    public void goNext() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                browserTabManager.currentResourceClient.goNext();
             }
         });
     }
