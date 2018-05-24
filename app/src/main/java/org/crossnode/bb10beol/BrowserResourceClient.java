@@ -55,6 +55,10 @@ class BrowserResourceClient extends XWalkResourceClient {
 
     @Override
     public void onProgressChanged(XWalkView view, int progressInPercent) {
+        if (!this.isActive) {
+            return;
+        }
+
         try {
             JSONObject obj = new JSONObject();
             obj.put("type", "loadprogress");
