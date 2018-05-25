@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         LinearLayout mainLayout = this.findViewById(R.id.mainLayout);
         Browser browser = new Browser(this, mainLayout);
-        browser.initialize("https://google.de");
+        browser.initialize(null);
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }
