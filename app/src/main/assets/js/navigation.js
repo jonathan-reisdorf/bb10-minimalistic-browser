@@ -36,8 +36,6 @@ class BB10BrowserNavigationActions {
 
         if (el.dataset.toggle) {
           this.activeEl = this.activeEl ? null : el;
-        } else {
-          this.activeEl = null;
         }
 
         this.renderStatus();
