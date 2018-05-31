@@ -1,3 +1,24 @@
+class BB10BrowserSearch {
+  static get engine() {
+    return browserSettings.get('search.engine');
+  }
+
+  static get homepageUrl() {
+    return {
+      google: 'https://www.google.com/',
+      ddg: 'https://duckduckgo.com/'
+    }[this.engine];
+  }
+
+  static getSearchUrl(query) {
+    return {
+      google: `https://www.google.com/search?q=${query}&oq=${query}`,
+      ddg: `https://duckduckgo.com/?q=${query}`
+    }[this.engine];
+  }
+}
+
+
 class BB10BrowserNavigationActions {
   constructor(navigationReference) {
     this.elements = [...document.querySelectorAll('.js-navigationAction')];
@@ -45,14 +66,22 @@ class BB10BrowserNavigationActions {
     this[el.dataset.action]();
   }
 
-  toggleTabsOverview() {
+  toggleSystemTab(openAction) {
     this.isPending = true;
 
     if (!this.activeEl) {
-      return navigation.closeTabsOverview();
+      return navigation.closeSystemTab();
     }
 
-    return navigation.showTabsOverview();
+    return navigation[openAction]();
+  }
+
+  toggleTabsOverview() {
+    this.toggleSystemTab('showTabsOverview');
+  }
+
+  toggleContext() {
+    this.toggleSystemTab('showContextMenu');
   }
 
   goPrev() {
@@ -67,6 +96,8 @@ class BB10BrowserNavigationActions {
     this.activeEl = null;
     this.isPending = false;
     this.renderStatus();
+
+    browserSettings.update();
     this.navigationReference.enableInput();
   }
 
@@ -131,8 +162,8 @@ class BB10BrowserNavigation {
       return 'http://' + input;
     }
 
-    const search = encodeURIComponent(input);
-    return `https://www.google.com/search?q=${search}&oq=${search}`;
+    const query = encodeURIComponent(input);
+    return BB10BrowserSearch.getSearchUrl(query);
   }
 
   updateUrl(url) {
@@ -185,7 +216,7 @@ class BB10BrowserNavigation {
         this.setLoadInProgress(false, event.navigationUrl, event.navigationUrl);
         break;
       default:
-        console.log('unhandled event:', event);
+        console.warn('unhandled event:', event);
     }
 
     this.onNavigationHistoryEvent(event);
@@ -240,4 +271,4 @@ class BB10BrowserNavigation {
   }
 }
 
-new BB10BrowserNavigation('https://google.com');
+new BB10BrowserNavigation(BB10BrowserSearch.homepageUrl);

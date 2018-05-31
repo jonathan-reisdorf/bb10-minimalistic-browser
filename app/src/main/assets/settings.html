@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline';">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
+    <link rel="stylesheet" type="text/css" href="css/setting.css">
+    <title>BB10 Minimal Browser - Settings</title>
+</head>
+<body>
+<div class="menu">
+    <div class="menu__item">
+        <span class="menu__left menu__text">Search Engine</span>
+        <div class="menu__right">
+            <select class="setting setting--uninitialized setting--dropdown js-setting" data-setting="search.engine">
+                <option value="google">Google</option>
+                <option value="ddg">DuckDuckGo</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="messages js-messages"></div>
+
+<script type="text/javascript" src="js/settings.js"></script>
+</body>
+</html>
