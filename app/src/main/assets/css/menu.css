@@ -64,3 +64,28 @@ body {
   flex: 1;
   text-align: right;
 }
+
+
+@keyframes message {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.messages {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.message {
+  margin: 1em;
+  padding: 1em;
+  background: #38b755;
+  opacity: 0;
+  border-radius: 0.15em;
+  animation: message 3s;
+}

@@ -4,42 +4,41 @@ class BB10BrowserSettings {
     this._initialize();
   }
 
-  get DEFAULTS() {
+  static get DEFAULTS() {
     return {
       'search.engine': 'ddg'
     };
   }
 
   _initialize() {
-    try {
-      this._settings = JSON.parse(localStorage.getItem('beolSettings') || '{}');
-    } catch(e) {
-      this._settings = {};
-      console.warn('Error retrieving browser settings:', e);
-    }
-
+    this.update();
     this._initializeElements();
   }
 
   _initializeElements() {
     this._elements.forEach(el => {
       const key = el.dataset.setting;
-      let value = this.get(key);
 
-      if (typeof value === 'undefined') {
-        value = this.DEFAULTS[key];
-      }
-
-      el.value = value;
-
+      el.value = this.get(key);
       el.addEventListener('change', () => this.set(key, el.value));
       el.classList.remove('setting--uninitialized');
     });
   }
 
+  update() {
+    try {
+      this._settings = JSON.parse(localStorage.getItem('beolSettings') || '{}');
+    } catch(e) {
+      this._settings = this._settings || {};
+      console.warn('Error retrieving browser settings:', e);
+    }
+  }
+
   get(key) {
     const path = key.split('.');
-    return (this._traverse(path, this._settings) || {})._value;
+    let value = (this._traverse(path, this._settings) || {})._value;
+
+    return typeof value !== 'undefined' ? value : BB10BrowserSettings.DEFAULTS[key];
   }
 
   set(key, value) {
@@ -49,11 +48,26 @@ class BB10BrowserSettings {
     data[end] = Object.assign({}, data[end], { _value: value });
 
     localStorage.setItem('beolSettings', JSON.stringify(this._settings));
-    this.onSaved(key);
+    this.onSaved(key, value);
   }
 
-  onSaved(key) {
-    alert(`Setting ${key} saved`);
+  onSaved(key, value) {
+    this.showMessage(`setting "${key}" changed to "${value}"`);
+  }
+
+  showMessage(message) {
+      const messagesContainer = document.querySelector('.js-messages');
+
+      if (!messagesContainer) {
+          return alert(message);
+      }
+
+      const messageEl = document.createElement('div');
+      messageEl.className = 'message';
+      messageEl.innerHTML = message;
+
+      document.querySelector('.js-messages').appendChild(messageEl);
+      setTimeout(() => messageEl.remove(), 3500);
   }
 
   _traverse(path, data, create) {
