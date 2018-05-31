@@ -45,14 +45,22 @@ class BB10BrowserNavigationActions {
     this[el.dataset.action]();
   }
 
-  toggleTabsOverview() {
+  toggleSystemTab(openAction) {
     this.isPending = true;
 
     if (!this.activeEl) {
-      return navigation.closeTabsOverview();
+      return navigation.closeSystemTab();
     }
 
-    return navigation.showTabsOverview();
+    return navigation[openAction]();
+  }
+
+  toggleTabsOverview() {
+    this.toggleSystemTab('showTabsOverview');
+  }
+
+  toggleContext() {
+    this.toggleSystemTab('showContextMenu');
   }
 
   goPrev() {
