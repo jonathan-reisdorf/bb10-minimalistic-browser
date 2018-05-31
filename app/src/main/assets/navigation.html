@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport"
-          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
     <title>BB10 Minimal Browser - Navigation</title>
 </head>
@@ -34,9 +34,18 @@
         </svg>
     </button>
 
+    <button type="button" class="navigation__action js-navigationAction" data-action="toggleContext" data-toggle="true">
+        <svg class="navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+            <circle cx="11.5" cy="20" r="1.5"/>
+            <circle cx="11.5" cy="11.5" r="1.5"/>
+            <circle cx="11.5" cy="3" r="1.5"/>
+        </svg>
+    </button>
+
     <input type="submit" style="display: none">
 </form>
 
+<script type="text/javascript" src="js/settings.js"></script>
 <script type="text/javascript" src="js/navigation.js"></script>
 </body>
 </html>
