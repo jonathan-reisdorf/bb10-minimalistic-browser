@@ -141,6 +141,7 @@ class BB10BrowserNavigationConvenience {
     }
 
     this.update();
+    browserSettings.hooks.push(this.update.bind(this));
   }
 
   get isEnabled() {
@@ -206,6 +207,12 @@ class BB10BrowserNavigation {
     }
 
     const navigationUrlEl = document.querySelector('.navigation__url');
+    navigationUrlEl.dataset.url = url;
+
+    if (document.hasFocus() && document.activeElement === navigationUrlEl) {
+      return;
+    }
+
     navigationUrlEl.value = url;
   }
 
@@ -214,8 +221,9 @@ class BB10BrowserNavigation {
     const {navigationUrlEl} = this;
 
     navigationFormEl.addEventListener('submit', () => {
-      this.openUrl(navigationUrlEl.value);
+      navigationUrlEl.dataset.url = navigationUrlEl.value;
       navigationUrlEl.blur();
+      this.openUrl(navigationUrlEl.value);
     });
 
     navigationUrlEl.addEventListener('focus', () => {
@@ -223,6 +231,7 @@ class BB10BrowserNavigation {
     });
 
     navigationUrlEl.addEventListener('blur', () => {
+      navigationUrlEl.value = navigationUrlEl.dataset.url || '';
       setTimeout(() => navigationUrlEl.setSelectionRange(0, 0), 50);
     });
 

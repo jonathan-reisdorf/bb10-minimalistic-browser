@@ -12,6 +12,7 @@ class BB10BrowserSettings {
   }
 
   _initialize() {
+    this.hooks = [];
     this.update();
     this._initializeElements();
   }
@@ -41,6 +42,8 @@ class BB10BrowserSettings {
       this._settings = this._settings || {};
       console.warn('Error retrieving browser settings:', e);
     }
+
+    this.hooks.forEach(hook => hook(this._settings));
   }
 
   get(key) {

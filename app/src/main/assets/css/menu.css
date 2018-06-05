@@ -24,7 +24,7 @@ body {
 
 .menu__item {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   text-decoration: none;
   color: inherit;
   line-height: 23px;
@@ -63,6 +63,16 @@ body {
 .menu__right {
   flex: 1;
   text-align: right;
+}
+
+.menu__help {
+  flex: none;
+  width: 100%;
+  text-align: left;
+  color: #aaa;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  margin-top: 1em;
 }
 
 
