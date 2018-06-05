@@ -24,7 +24,7 @@ body {
 
 .menu__item {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   text-decoration: none;
   color: inherit;
   line-height: 23px;
@@ -65,6 +65,16 @@ body {
   text-align: right;
 }
 
+.menu__help {
+  flex: none;
+  width: 100%;
+  text-align: left;
+  color: #aaa;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  margin-top: 1em;
+}
+
 
 @keyframes message {
   0% { opacity: 0; }
@@ -84,7 +94,7 @@ body {
 .message {
   margin: 1em;
   padding: 1em;
-  background: #38b755;
+  background: #4f9e62;
   opacity: 0;
   border-radius: 0.15em;
   animation: message 3s;

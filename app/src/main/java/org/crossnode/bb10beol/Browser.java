@@ -17,6 +17,7 @@ public class Browser {
 
     private BrowserTabManager browserTabManager;
     private XWalkView navigationWebView;
+    private BrowserResourceClient navigationResourceClient;
 
     private String navigationFileUrl = "file:///android_asset/navigation.html";
 
@@ -39,8 +40,10 @@ public class Browser {
         mCookieManager.setAcceptCookie(true);
         mCookieManager.setAcceptFileSchemeCookies(true);
 
-        navigationWebView.setResourceClient(new BrowserResourceClient(navigationWebView, navigationWebView));
+        navigationResourceClient = new BrowserResourceClient(navigationWebView, navigationWebView);
+        navigationWebView.setResourceClient(navigationResourceClient);
         navigationWebView.addJavascriptInterface(new NavigationJsInterface(activity, browserTabManager), "navigation");
+        navigationWebView.addJavascriptInterface(new NavigationConvenienceJsInterface(activity), "navigationConvenience");
         navigationWebView.loadUrl(navigationFileUrl);
 
         int navigationHeight = 40;
@@ -49,5 +52,9 @@ public class Browser {
 
         mainLayout.addView(xWalkWebView);
         mainLayout.addView(navigationWebView);
+    }
+
+    public void onResume() {
+        navigationResourceClient.triggerJavascriptHandler("onApplicationResume", null);
     }
 }

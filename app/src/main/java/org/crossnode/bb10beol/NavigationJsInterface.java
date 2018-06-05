@@ -22,7 +22,10 @@ class NavigationJsInterface {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                browserTabManager.load(url);
+                if (!browserTabManager.currentResourceClient.isSystem) {
+                    // TODO load on previous/non-system/new tab in that case!
+                    browserTabManager.load(url);
+                }
             }
         });
     }

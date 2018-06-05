@@ -134,21 +134,54 @@ class BB10BrowserNavigationActions {
 }
 
 
+class BB10BrowserNavigationConvenience {
+  constructor() {
+    if (!window.navigationConvenience) {
+      return;
+    }
+
+    this.update();
+    browserSettings.hooks.push(this.update.bind(this));
+  }
+
+  get isEnabled() {
+    return browserSettings.get('navigation.autopaste');
+  }
+
+  update() {
+    navigationConvenience.setEnabled(!!this.isEnabled);
+  }
+
+  getClipboardText() {
+    const clipboardText = this.isEnabled && navigationConvenience.getClipboardText() || null;
+
+    if (clipboardText === this._previousClipboardText) {
+      return null;
+    }
+
+    this._previousClipboardText = clipboardText;
+    return clipboardText;
+  }
+}
+
+
 class BB10BrowserNavigation {
-  constructor(url) {
+  constructor() {
     this.navigationUrlEl = document.querySelector('.navigation__url');
 
     this.actions = new BB10BrowserNavigationActions(this);
+    this.convenience = new BB10BrowserNavigationConvenience();
     this.attachEvents();
-    this.openUrl(url);
   }
 
   openUrl(url) {
     this.loadUrl = null;
-    navigation.openUrl(this.determineUrl(url));
+    navigation.openUrl(this.determineUrl(url, true));
   }
 
-  determineUrl(input) {
+  determineUrl(input, useSearchQueryFallback = false) {
+    input = (input || '').trim();
+
     const isUrl = input.split('?')[0].indexOf(' ') === -1 && input.split('?')[0].indexOf('.') !== -1;
     const containsProtocol = isUrl && input.indexOf('://') !== -1;
 
@@ -158,6 +191,10 @@ class BB10BrowserNavigation {
 
     if (isUrl) {
       return 'http://' + input;
+    }
+
+    if (!useSearchQueryFallback) {
+      return false;
     }
 
     const query = encodeURIComponent(input);
@@ -170,6 +207,12 @@ class BB10BrowserNavigation {
     }
 
     const navigationUrlEl = document.querySelector('.navigation__url');
+    navigationUrlEl.dataset.url = url;
+
+    if (document.hasFocus() && document.activeElement === navigationUrlEl) {
+      return;
+    }
+
     navigationUrlEl.value = url;
   }
 
@@ -178,8 +221,9 @@ class BB10BrowserNavigation {
     const {navigationUrlEl} = this;
 
     navigationFormEl.addEventListener('submit', () => {
-      this.openUrl(navigationUrlEl.value);
+      navigationUrlEl.dataset.url = navigationUrlEl.value;
       navigationUrlEl.blur();
+      this.openUrl(navigationUrlEl.value);
     });
 
     navigationUrlEl.addEventListener('focus', () => {
@@ -187,12 +231,14 @@ class BB10BrowserNavigation {
     });
 
     navigationUrlEl.addEventListener('blur', () => {
+      navigationUrlEl.value = navigationUrlEl.dataset.url || '';
       setTimeout(() => navigationUrlEl.setSelectionRange(0, 0), 50);
     });
 
     this.actions.attachEvents();
 
     window.onNavigationEvent = this.onNavigationEvent.bind(this);
+    window.onApplicationResume = this.onApplicationResume.bind(this);
   }
 
   onNavigationEvent(event) {
@@ -267,6 +313,23 @@ class BB10BrowserNavigation {
   enableInput() {
     this.navigationUrlEl.disabled = false;
   }
+
+  get homepageUrl() {
+    return this.clipboardUrl || BB10BrowserSearch.homepageUrl;
+  }
+
+  get clipboardUrl() {
+    return this.determineUrl(this.convenience.getClipboardText());
+  }
+
+  onApplicationResume() {
+    const clipboardUrl = this.clipboardUrl;
+
+    if (clipboardUrl) {
+      this.openUrl(clipboardUrl);
+    }
+  }
 }
 
-new BB10BrowserNavigation(BB10BrowserSearch.homepageUrl);
+const browserNavigation = new BB10BrowserNavigation();
+browserNavigation.openUrl(browserNavigation.homepageUrl);
