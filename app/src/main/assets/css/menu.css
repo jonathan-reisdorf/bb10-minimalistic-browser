@@ -84,7 +84,7 @@ body {
 .message {
   margin: 1em;
   padding: 1em;
-  background: #38b755;
+  background: #4f9e62;
   opacity: 0;
   border-radius: 0.15em;
   animation: message 3s;

@@ -6,7 +6,8 @@ class BB10BrowserSettings {
 
   static get DEFAULTS() {
     return {
-      'search.engine': 'ddg'
+      'search.engine': 'ddg',
+      'navigation.autopaste': false
     };
   }
 
@@ -19,10 +20,18 @@ class BB10BrowserSettings {
     this._elements.forEach(el => {
       const key = el.dataset.setting;
 
-      el.value = this.get(key);
-      el.addEventListener('change', () => this.set(key, el.value));
+      this.setElValue(el, this.get(key));
+      el.addEventListener('change', () => this.set(key, this.getElValue(el)));
       el.classList.remove('setting--uninitialized');
     });
+  }
+
+  setElValue(el, value) {
+    el.type === 'checkbox' ? el.checked = !!value : el.value = value;
+  }
+
+  getElValue(el) {
+    return el.type === 'checkbox' ? !!el.checked : el.value;
   }
 
   update() {
@@ -52,7 +61,7 @@ class BB10BrowserSettings {
   }
 
   onSaved(key, value) {
-    this.showMessage(`setting "${key}" changed to "${value}"`);
+    this.showMessage(`setting "${key}" changed to ${JSON.stringify(value)}`);
   }
 
   showMessage(message) {

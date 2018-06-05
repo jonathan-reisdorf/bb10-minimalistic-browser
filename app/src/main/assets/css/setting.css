@@ -13,6 +13,44 @@
   color: #fff;
 }
 
+.setting__switch {
+  display: inline-block;
+  padding: 0.4em 0.5em;
+  margin: -0.4em 0;
+  width: 2.5em;
+  background-color: #444;
+  border-radius: 1em;
+  transition: background-color 0.3s;
+  will-change: background-color;
+}
+
+.setting__switch::before {
+  content: '';
+  display: block;
+  width: 1.5em;
+  height: 1.25em;
+  border-radius: 1em;
+  background: #fff;
+  transition: transform 0.3s;
+  will-change: transform;
+}
+
+.setting--checkbox {
+  display: none;
+}
+
+.setting--checkbox:checked + .setting__switch {
+  background-color: #4f9e62;
+}
+
+.setting--checkbox:checked + .setting__switch::before {
+  transform: translateX(1em);
+}
+
 .setting--uninitialized {
+  display: none;
+}
+
+.setting--uninitialized + .setting__switch {
   display: none;
 }
