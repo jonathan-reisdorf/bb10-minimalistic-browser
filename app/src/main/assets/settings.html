@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline';">
     <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link rel="stylesheet" type="text/css" href="css/setting.css">
@@ -22,13 +21,30 @@
         </div>
     </div>
     <div class="menu__item">
+        <span class="menu__left menu__text">Homepage</span>
+        <div class="menu__right">
+            <select class="setting setting--uninitialized setting--dropdown js-setting" data-setting="navigation.homepage.type">
+                <option value="bookmarks">Bookmarks</option>
+                <option value="search">Search</option>
+                <option value="custom">Custom URL</option>
+            </select>
+        </div>
+    </div>
+    <div class="menu__item setting--uninitialized js-settingConditional" data-setting-conditional-key="navigation.homepage.type" data-setting-conditional-value="custom">
+        <span class="menu__left menu__text">Homepage URL</span>
+        <div class="menu__right">
+            <input type="url" class="setting setting--uninitialized setting--input setting--full js-setting" data-setting="navigation.homepage.url" placeholder="URL">
+        </div>
+    </div>
+    <div class="menu__item">
         <span class="menu__left menu__text">URL auto-paste</span>
         <label class="menu__right">
             <input type="checkbox" class="setting setting--uninitialized setting--checkbox js-setting" data-setting="navigation.autopaste">
             <span class="setting__switch"></span>
         </label>
         <div class="menu__help">
-            When enabled, a URL present in the clipboard when opening or returning to BEOL is automatically loaded (content other than a URL is ignored).<br>
+            When enabled, a URL present in the clipboard when opening or returning to BEOL is automatically loaded
+            (content other than a URL is ignored, overrides homepage setting).<br>
             When disabled (default setting), the clipboard is not read.
         </div>
     </div>

@@ -2,7 +2,7 @@
   display: none;
 }
 
-.setting--dropdown {
+.setting--dropdown, .setting--input {
   display: inline-block;
   border: 0 none;
   line-height: 23px;
@@ -11,6 +11,17 @@
   background: #444;
   border-radius: 0.15em;
   color: #fff;
+}
+
+.setting--input {
+  user-select: text;
+  touch-callout: default;
+}
+
+.setting--full {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .setting__switch {
@@ -47,7 +58,7 @@
   transform: translateX(1em);
 }
 
-.setting--uninitialized {
+.setting--hidden, .setting--uninitialized {
   display: none;
 }
 
