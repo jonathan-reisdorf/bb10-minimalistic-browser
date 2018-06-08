@@ -6,6 +6,12 @@ class BB10BrowserSettings {
 
   static get DEFAULTS() {
     return {
+      'bookmarks': [
+        {
+          title: 'DuckDuckGo',
+          url: 'https://duckduckgo.com/'
+        }
+      ],
       'search.engine': 'ddg',
       'navigation.autopaste': false
     };
@@ -61,6 +67,7 @@ class BB10BrowserSettings {
 
     localStorage.setItem('beolSettings', JSON.stringify(this._settings));
     this.onSaved(key, value);
+    return value;
   }
 
   onSaved(key, value) {
@@ -71,7 +78,7 @@ class BB10BrowserSettings {
       const messagesContainer = document.querySelector('.js-messages');
 
       if (!messagesContainer) {
-          return alert(message);
+          return; // alert(message)
       }
 
       const messageEl = document.createElement('div');
