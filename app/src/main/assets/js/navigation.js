@@ -315,7 +315,20 @@ class BB10BrowserNavigation {
   }
 
   get homepageUrl() {
-    return this.clipboardUrl || BB10BrowserSearch.homepageUrl;
+    const homepageType = browserSettings.get('navigation.homepage.type');
+
+    switch (homepageType) {
+      case 'bookmarks':
+        return browserSettings.get('bookmarks.url');
+      case 'search':
+        return BB10BrowserSearch.homepageUrl;
+      default:
+        return browserSettings.get('navigation.homepage.url');
+    }
+  }
+
+  get defaultUrl() {
+    return this.clipboardUrl || this.homepageUrl;
   }
 
   get clipboardUrl() {
@@ -332,4 +345,4 @@ class BB10BrowserNavigation {
 }
 
 const browserNavigation = new BB10BrowserNavigation();
-browserNavigation.openUrl(browserNavigation.homepageUrl);
+browserNavigation.openUrl(browserNavigation.defaultUrl);

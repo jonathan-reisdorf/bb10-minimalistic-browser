@@ -1,6 +1,7 @@
 class BB10BrowserSettings {
   constructor() {
     this._elements = [...document.querySelectorAll('.js-setting')];
+    this._conditionalElements = [...document.querySelectorAll('.js-settingConditional')];
     this._initialize();
   }
 
@@ -12,7 +13,10 @@ class BB10BrowserSettings {
           url: 'https://duckduckgo.com/'
         }
       ],
+      'bookmarks.url': 'file:///android_asset/bookmarks.html',
       'search.engine': 'ddg',
+      'navigation.homepage.type': 'bookmarks',
+      'navigation.homepage.url': '',
       'navigation.autopaste': false
     };
   }
@@ -28,7 +32,22 @@ class BB10BrowserSettings {
       const key = el.dataset.setting;
 
       this.setElValue(el, this.get(key));
-      el.addEventListener('change', () => this.set(key, this.getElValue(el)));
+      el.addEventListener('change', () => {
+        this.set(key, this.getElValue(el));
+        this._updateConditionalSettings();
+      });
+      el.classList.remove('setting--uninitialized');
+    });
+
+    this._updateConditionalSettings();
+  }
+
+  _updateConditionalSettings() {
+    this._conditionalElements.forEach(el => {
+      const expectedValue = el.dataset.settingConditionalValue;
+      const actualValue = this.get(el.dataset.settingConditionalKey);
+
+      el.classList[expectedValue === actualValue ? 'remove' : 'add']('setting--hidden');
       el.classList.remove('setting--uninitialized');
     });
   }
