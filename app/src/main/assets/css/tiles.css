@@ -21,7 +21,7 @@ body {
     user-select: none;
 }
 
-.tabs {
+.tiles {
     display: flex;
     flex-flow: row wrap;
     list-style: none outside;
@@ -29,7 +29,7 @@ body {
     margin: 0;
 }
 
-.tab {
+.tile {
   display: block;
   flex: none;
   width: 33.3333vw;
@@ -43,7 +43,7 @@ body {
   box-sizing: border-box;
 }
 
-.tab__inner {
+.tile__inner {
   display: flex;
   flex-flow: column nowrap;
   flex: 1;
@@ -56,7 +56,7 @@ body {
   box-sizing: border-box;
 }
 
-.tab__text {
+.tile__text {
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
@@ -70,7 +70,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.tab__bar {
+.tile__bar {
   display: flex;
   flex-flow: row nowrap;
   flex: none;
@@ -78,13 +78,13 @@ body {
   color: #000;
 }
 
-.tab__url {
+.tile__url {
   display: block;
   flex: 1;
   overflow: hidden;
 }
 
-.tab__urlText {
+.tile__urlText {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -96,7 +96,7 @@ body {
   text-overflow: ellipsis;
 }
 
-.tab__close {
+.tile__close {
   display: block;
   flex: none;
   font-size: 0.75em;
@@ -107,20 +107,20 @@ body {
   font-weight: bold;
 }
 
-.tab--add .tab__inner {
+.tile--add .tile__inner {
   border: 2px dashed #bbb;
   background-color: transparent;
   justify-content: center;
   align-items: center;
 }
 
-.tab__icon {
+.tile__icon {
   display: block;
   flex: none;
   width: 32px;
   height: 32px;
 }
 
-.tab__template {
+.tile__template {
   display: none;
 }
