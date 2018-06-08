@@ -37,7 +37,8 @@ body {
 }
 
 .menu__item--disabled {
-  color: #888;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .menu__icon {
