@@ -19,9 +19,9 @@ public class BrowserTabManager {
     private ArrayList<BrowserResourceClient> resourceClients = new ArrayList<>();
 
     public XWalkView currentTab = null;
-    private XWalkView previousTab = null;
+    public XWalkView previousTab = null;
     public BrowserResourceClient currentResourceClient = null;
-    private BrowserResourceClient previousResourceClient = null;
+    public BrowserResourceClient previousResourceClient = null;
 
     private Activity activity;
     private LinearLayout mainLayout;

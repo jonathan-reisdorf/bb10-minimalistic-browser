@@ -70,6 +70,16 @@ class BrowserResourceClient extends XWalkResourceClient {
         } catch (JSONException ex) {}
     }
 
+    public JSONObject getNavigationItemDetails() {
+        XWalkNavigationHistory navigationHistory = webview.getNavigationHistory();
+
+        if (navigationHistory.size() < 1) {
+            return null;
+        }
+
+        return getNavigationItemDetails(navigationHistory.getCurrentItem());
+    }
+
     public JSONObject getNavigationItemDetails(XWalkNavigationItem navigationItem) {
         JSONObject obj = new JSONObject();
         addNavigationItemDetails(navigationItem, obj);
