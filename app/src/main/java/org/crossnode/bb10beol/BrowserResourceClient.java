@@ -145,4 +145,8 @@ class BrowserResourceClient extends XWalkResourceClient {
     public void reload(boolean forceReload) {
         webview.reload(forceReload ? XWalkView.RELOAD_IGNORE_CACHE : XWalkView.RELOAD_NORMAL);
     }
+
+    public void load(String url) {
+        webview.loadUrl(url);
+    }
 }

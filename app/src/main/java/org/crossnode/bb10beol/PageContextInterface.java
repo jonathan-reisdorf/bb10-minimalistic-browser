@@ -54,4 +54,15 @@ public class PageContextInterface {
             }
         });
     }
+
+    @JavascriptInterface
+    public void load(final String url) {
+        _activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                _browserTabManager.closeSystemTab();
+                _resourceClient.load(url);
+            }
+        });
+    }
 }

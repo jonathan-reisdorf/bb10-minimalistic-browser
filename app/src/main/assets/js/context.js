@@ -40,6 +40,13 @@ class BB10BrowserContext {
   reloadPage(reloadForced) {
     pageContext.reload(!!reloadForced);
   }
+
+  loadPage(url) {
+    // resolve relative links as well
+  	const link = document.createElement('a');
+  	link.href = url;
+  	pageContext.load(link.href);
+  }
 }
 
 const browserContext = new BB10BrowserContext();
