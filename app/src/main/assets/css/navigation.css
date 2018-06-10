@@ -63,7 +63,7 @@ html, body {
   background: #333;
   box-sizing: border-box;
   flex: none;
-  user-select: none;
+  -webkit-user-select: none;
 }
 
 .navigation__action--hideableIcon {

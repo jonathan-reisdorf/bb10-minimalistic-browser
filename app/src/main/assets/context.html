@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self';">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="css/menu.css">
@@ -31,6 +31,19 @@
     </div>
 </div>
 
-<script>console.log(currentPage.title(), currentPage.url(), currentPage.reload(false))</script>
+<div class="menu menu--uninitialized js-contextMenu">
+    <span class="menu__caption js-contextCaption"></span>
+
+    <a class="menu__item js-contextReload" href="javascript:browserContext.reloadPage(false)">
+        <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+            <path d="M11.9 23A10.9 10.9 0 0 1 1 12.4a10.91 10.91 0 0 1 18.67-7.41L19.58.03 21.42 0l.12 8.36-8.57-.12.03-1.79 5.63.1a9.46 9.46 0 0 0-6.73-2.97 9.08 9.08 0 0 0-9.06 8.85c0 5.28 4.68 8.84 9.06 8.84a9 9 0 0 0 8.39-5.68l1.71.69A10.88 10.88 0 0 1 11.9 23z"/>
+        </svg>
+
+        <span class="menu__text">Reload page</span>
+    </a>
+</div>
+
+
+<script type="text/javascript" src="js/context.js"></script>
 </body>
 </html>

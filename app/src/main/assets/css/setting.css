@@ -14,7 +14,7 @@
 }
 
 .setting--input {
-  user-select: text;
+  -webkit-user-select: text;
   touch-callout: default;
 }
 

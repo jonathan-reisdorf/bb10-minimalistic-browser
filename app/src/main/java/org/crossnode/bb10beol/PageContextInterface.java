@@ -8,18 +8,20 @@ import org.json.JSONObject;
 import org.xwalk.core.JavascriptInterface;
 
 
-public class CurrentPageInterface {
+public class PageContextInterface {
     private Activity _activity;
+    private BrowserTabManager _browserTabManager;
     private BrowserResourceClient _resourceClient;
 
     private String _title;
     private String _url;
 
-    CurrentPageInterface(Activity activity, BrowserResourceClient resourceClient) {
+    PageContextInterface(Activity activity, BrowserTabManager browserTabManager) {
         _activity = activity;
-        _resourceClient = resourceClient;
+        _browserTabManager = browserTabManager;
+        _resourceClient = browserTabManager.previousResourceClient;
 
-        JSONObject obj = resourceClient.getNavigationItemDetails();
+        JSONObject obj = _resourceClient.getNavigationItemDetails();
 
         if (obj == null) {
             return;
@@ -47,6 +49,7 @@ public class CurrentPageInterface {
         _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                _browserTabManager.closeSystemTab();
                 _resourceClient.reload(forceReload);
             }
         });

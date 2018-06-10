@@ -18,7 +18,7 @@ body {
     font-size: 13px;
     touch-callout: none;
     text-size-adjust: none;
-    user-select: none;
+    -webkit-user-select: none;
 }
 
 .tiles {

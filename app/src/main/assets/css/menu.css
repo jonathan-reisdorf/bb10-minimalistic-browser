@@ -14,12 +14,33 @@ body {
   font-size: 13px;
   touch-callout: none;
   text-size-adjust: none;
-  user-select: none;
+  -webkit-user-select: none;
 }
 
 .menu {
   display: block;
   padding: 0;
+}
+
+.menu--uninitialized {
+  display: none;
+}
+
+
+.menu + .menu {
+  margin-top: 2em;
+}
+
+.menu__caption {
+  display: block;
+  font-size: 0.8em;
+  background-color: #555;
+  padding: 0.7em;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  border-radius: 0.25em 0.25em 0 0;
 }
 
 .menu__item {
@@ -30,6 +51,7 @@ body {
   line-height: 23px;
   padding: 1em;
   border-bottom: 1px solid #555;
+  touch-callout: none;
 }
 
 .menu__item:last-child {
