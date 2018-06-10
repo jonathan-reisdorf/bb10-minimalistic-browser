@@ -47,7 +47,7 @@ class NavigationJsInterface {
             @Override
             public void run() {
                 XWalkView webview = browserTabManager.addTab(contextMenuFileUrl, true);
-                webview.addJavascriptInterface(new CurrentPageInterface(browserTabManager.previousResourceClient.getNavigationItemDetails()), "currentPage");
+                webview.addJavascriptInterface(new CurrentPageInterface(activity, browserTabManager.previousResourceClient), "currentPage");
             }
         });
     }

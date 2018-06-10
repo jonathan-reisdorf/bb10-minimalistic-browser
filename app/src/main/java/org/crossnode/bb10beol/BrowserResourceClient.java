@@ -141,4 +141,8 @@ class BrowserResourceClient extends XWalkResourceClient {
     public void goNext() {
         webview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD,1);
     }
+
+    public void reload(boolean forceReload) {
+        webview.reload(forceReload ? XWalkView.RELOAD_IGNORE_CACHE : XWalkView.RELOAD_NORMAL);
+    }
 }

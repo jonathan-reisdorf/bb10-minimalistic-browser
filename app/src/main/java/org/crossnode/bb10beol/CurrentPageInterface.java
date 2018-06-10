@@ -1,15 +1,26 @@
 package org.crossnode.bb10beol;
 
+import android.app.Activity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import org.xwalk.core.JavascriptInterface;
 
 
 public class CurrentPageInterface {
+    private Activity _activity;
+    private BrowserResourceClient _resourceClient;
+
     private String _title;
     private String _url;
 
-    CurrentPageInterface(JSONObject obj) {
+    CurrentPageInterface(Activity activity, BrowserResourceClient resourceClient) {
+        _activity = activity;
+        _resourceClient = resourceClient;
+
+        JSONObject obj = resourceClient.getNavigationItemDetails();
+
         if (obj == null) {
             return;
         }
@@ -29,5 +40,15 @@ public class CurrentPageInterface {
     @JavascriptInterface
     public String url() {
         return _url;
+    }
+
+    @JavascriptInterface
+    public void reload(final boolean forceReload) {
+        _activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                _resourceClient.reload(forceReload);
+            }
+        });
     }
 }
