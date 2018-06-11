@@ -34,6 +34,22 @@
 <div class="menu menu--uninitialized js-contextMenu">
     <span class="menu__caption js-contextCaption"></span>
 
+    <a class="menu__item js-contextAddBookmark" href="javascript:browserContext.bookmarkPage()">
+        <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+            <path d="M5.67 0C4.74 0 4 .73 4 1.64v20.81c0 .41.16.55.52.55l6.98-4.38L18.48 23c.36 0 .52-.14.52-.55V1.65C19 .72 18.26 0 17.33 0H5.67zm5.24 5.5h1.18v3.42h3.41v1.16h-3.4v3.42h-1.2v-3.42H7.5V8.92h3.4V5.5z"/>
+        </svg>
+
+        <span class="menu__text">Add to bookmarks</span>
+    </a>
+
+    <a class="menu__item js-contextRemoveBookmark" href="javascript:browserContext.unbookmarkPage()">
+        <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+            <path d="M5.67 0C4.74 0 4 .73 4 1.64v20.81c0 .41.16.55.52.55l6.98-4.38L18.48 23c.36 0 .52-.14.52-.55V1.65C19 .72 18.26 0 17.33 0H5.67zm3.42 6.25l2.42 2.42 2.4-2.41.83.82-2.41 2.41 2.42 2.42-.84.84-2.42-2.42-2.4 2.41-.83-.82 2.41-2.41-2.42-2.42.84-.84z"/>
+        </svg>
+
+        <span class="menu__text">Remove from bookmarks</span>
+    </a>
+
     <a class="menu__item js-contextReload" href="javascript:browserContext.reloadPage(false)">
         <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
             <path d="M11.9 23A10.9 10.9 0 0 1 1 12.4a10.91 10.91 0 0 1 18.67-7.41L19.58.03 21.42 0l.12 8.36-8.57-.12.03-1.79 5.63.1a9.46 9.46 0 0 0-6.73-2.97 9.08 9.08 0 0 0-9.06 8.85c0 5.28 4.68 8.84 9.06 8.84a9 9 0 0 0 8.39-5.68l1.71.69A10.88 10.88 0 0 1 11.9 23z"/>
@@ -43,7 +59,8 @@
     </a>
 </div>
 
-
+<script type="text/javascript" src="js/settings.js"></script>
+<script type="text/javascript" src="js/bookmarks.js"></script>
 <script type="text/javascript" src="js/context.js"></script>
 </body>
 </html>

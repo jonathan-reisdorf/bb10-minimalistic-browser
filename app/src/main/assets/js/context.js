@@ -7,12 +7,13 @@ class BB10BrowserContext {
   }
 
   initialize() {
-    if (this.isSystemFile) {
+    if (this.isSystemFile || !this.pageUrl) {
       return;
     }
 
     this.renderCaption();
     this.initializeReload();
+    this.updateBookmarkStatus();
 
     document.querySelector('.js-contextMenu').classList.remove('menu--uninitialized');
   }
@@ -34,7 +35,7 @@ class BB10BrowserContext {
 
   renderCaption() {
     const captionEl = document.querySelector('.js-contextCaption');
-    captionEl.innerHTML = `${this.pageTitle} &#8212; ${this.pageUrl}`;
+    captionEl.innerHTML = [this.pageTitle, this.pageUrl].filter(item => item).join(' &#8212; ');
   }
 
   reloadPage(reloadForced) {
@@ -46,6 +47,30 @@ class BB10BrowserContext {
   	const link = document.createElement('a');
   	link.href = url;
   	pageContext.load(link.href);
+  }
+
+  get isBookmarked() {
+    return bookmarks.getIndexByUrl(this.pageUrl) !== -1;
+  }
+
+  updateBookmarkStatus() {
+    const addEl = document.querySelector('.js-contextAddBookmark');
+    const removeEl = document.querySelector('.js-contextRemoveBookmark');
+    const {isBookmarked} = this;
+
+    addEl.classList[isBookmarked ? 'add' : 'remove']('menu__item--hidden');
+    removeEl.classList[!isBookmarked ? 'add' : 'remove']('menu__item--hidden');
+  }
+
+  bookmarkPage() {
+    bookmarks.save(this.pageTitle || this.pageUrl, this.pageUrl);
+    this.updateBookmarkStatus();
+  }
+
+  unbookmarkPage() {
+    const index = bookmarks.getIndexByUrl(this.pageUrl);
+    bookmarks.removeByIndex(index);
+    this.updateBookmarkStatus();
   }
 }
 

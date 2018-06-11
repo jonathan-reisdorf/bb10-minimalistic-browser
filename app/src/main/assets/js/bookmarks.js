@@ -49,11 +49,14 @@ class BB10BrowserBookmarks {
 
     const {index} = this._getBookmarkByEvent(event).dataset;
 
+    this.removeByIndex(index);
+    this.render();
+  }
+
+  removeByIndex(index) {
     let {bookmarks} = this;
     bookmarks.splice(index, 1);
     this.bookmarks = bookmarks;
-
-    this.render();
   }
 
   showForm() {
@@ -82,7 +85,7 @@ class BB10BrowserBookmarks {
     }
 
     let {bookmarks} = this;
-    const existingIndex = bookmarks.map(({url}) => url).indexOf(url);
+    const existingIndex = this.getIndexByUrl(url);
 
     if (existingIndex !== -1) {
       bookmarks[existingIndex].title = title;
@@ -91,6 +94,10 @@ class BB10BrowserBookmarks {
     }
 
     this.bookmarks = bookmarks;
+  }
+
+  getIndexByUrl(url) {
+    return this.bookmarks.map(({url}) => url).indexOf(url);
   }
 
   _getBookmarkByEvent(event) {

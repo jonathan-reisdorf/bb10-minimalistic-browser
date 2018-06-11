@@ -39,6 +39,7 @@ body {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   box-sizing: border-box;
   border-radius: 0.25em 0.25em 0 0;
 }
@@ -61,6 +62,10 @@ body {
 .menu__item--disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.menu__item--hidden {
+  display: none;
 }
 
 .menu__icon {
