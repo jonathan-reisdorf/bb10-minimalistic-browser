@@ -2,21 +2,28 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="css/tiles.css">
     <link rel="stylesheet" type="text/css" href="css/form.css">
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
     <title>BB10 Minimal Browser - Bookmarks</title>
 </head>
 <body>
 
+<div class="tiles__headline">
+    <span class="tiles__headlineIcon icon icon--textSize icon--bookmark"></span>
+    <span class="tiles__headlineText">Bookmarks</span>
+</div>
 <div class="tiles js-bookmarks"></div>
 
 <div class="tile__template js-bookmarkTemplate">
     <a href="{{url}}" rel="noopener noreferrer" class="tile js-bookmark" data-index="{{index}}">
         <div class="tile__inner">
-            <div class="tile__text">{{title}}</div>
+            <div class="tile__textContainer">
+                <div class="tile__text">{{title}}</div>
+            </div>
             <div class="tile__bar">
                 <div class="tile__url">
                     <span class="tile__urlText">{{url}}</span>
@@ -30,14 +37,12 @@
 <div class="tile__template js-addBookmarkTemplate">
     <div class="tile tile--add js-addBookmark">
         <div class="tile__inner">
-            <svg class="tile__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                <path fill="#fff" d="M16 3C8.832 3 3 8.832 3 16s5.832 13 13 13 13-5.832 13-13S23.168 3 16 3zm0 2c6.086 0 11 4.914 11 11s-4.914 11-11 11S5 22.086 5 16 9.914 5 16 5zm-1 5v5h-5v2h5v5h2v-5h5v-2h-5v-5z"/>
-            </svg>
+            <span class="icon icon--bigger icon--bookmark-add"></span>
         </div>
     </div>
 </div>
 
-<form class="form form--overlay form--hidden js-addBookmarkForm" action="javascript:bookmarks.add(this)">
+<form class="form form--overlay form--hidden js-addBookmarkForm" action="javascript:bookmarks.add(this)" autocomplete="off">
     <div class="form__row">
         <label for="formBookmarkTitle" class="form__label">Bookmark Title</label>
         <input type="text" id="formBookmarkTitle" name="title" class="form__input" value="" required placeholder="Title">

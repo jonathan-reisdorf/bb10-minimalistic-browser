@@ -60,15 +60,16 @@ html, body {
   padding: 0.5em;
   border: 0;
   height: 100%;
-  background: #333;
+  background-color: #333;
+  transition: background-color 0.3s;
   box-sizing: border-box;
   flex: none;
-  user-select: none;
+  -webkit-user-select: none;
 }
 
 .navigation__action--hideableIcon {
   width: calc(1em + 23px);
-  transition: width 0.3s, padding 0.3s, margin 0.3s;
+  transition: width 0.3s, padding 0.3s, margin 0.3s, background-color 0.3s;
   overflow: hidden;
 }
 
@@ -83,14 +84,6 @@ html, body {
   outline: none;
 }
 
-.navigation__icon {
-  display: block;
-  height: 23px;
-  width: 23px;
-  fill: #fff;
-  transition: fill 0.3s;
-}
-
-.navigation__action--active .navigation__icon {
-  fill: #ffa800;
+.navigation__action--active {
+  background-color: #666;
 }

@@ -70,6 +70,16 @@ class BrowserResourceClient extends XWalkResourceClient {
         } catch (JSONException ex) {}
     }
 
+    public JSONObject getNavigationItemDetails() {
+        XWalkNavigationHistory navigationHistory = webview.getNavigationHistory();
+
+        if (navigationHistory.size() < 1) {
+            return null;
+        }
+
+        return getNavigationItemDetails(navigationHistory.getCurrentItem());
+    }
+
     public JSONObject getNavigationItemDetails(XWalkNavigationItem navigationItem) {
         JSONObject obj = new JSONObject();
         addNavigationItemDetails(navigationItem, obj);
@@ -130,5 +140,13 @@ class BrowserResourceClient extends XWalkResourceClient {
 
     public void goNext() {
         webview.getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD,1);
+    }
+
+    public void reload(boolean forceReload) {
+        webview.reload(forceReload ? XWalkView.RELOAD_IGNORE_CACHE : XWalkView.RELOAD_NORMAL);
+    }
+
+    public void load(String url) {
+        webview.loadUrl(url);
     }
 }
