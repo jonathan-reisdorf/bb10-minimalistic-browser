@@ -17,7 +17,9 @@
 <div class="tile__template js-bookmarkTemplate">
     <a href="{{url}}" rel="noopener noreferrer" class="tile js-bookmark" data-index="{{index}}">
         <div class="tile__inner">
-            <div class="tile__text">{{title}}</div>
+            <div class="tile__textContainer">
+                <div class="tile__text">{{title}}</div>
+            </div>
             <div class="tile__bar">
                 <div class="tile__url">
                     <span class="tile__urlText">{{url}}</span>
@@ -36,7 +38,7 @@
     </div>
 </div>
 
-<form class="form form--overlay form--hidden js-addBookmarkForm" action="javascript:bookmarks.add(this)">
+<form class="form form--overlay form--hidden js-addBookmarkForm" action="javascript:bookmarks.add(this)" autocomplete="off">
     <div class="form__row">
         <label for="formBookmarkTitle" class="form__label">Bookmark Title</label>
         <input type="text" id="formBookmarkTitle" name="title" class="form__input" value="" required placeholder="Title">
