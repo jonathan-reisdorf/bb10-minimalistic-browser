@@ -69,10 +69,6 @@ body {
 }
 
 .menu__icon {
-  flex: none;
-  width: 23px;
-  height: 23px;
-  fill: #fff;
   margin-right: 1em;
 }
 

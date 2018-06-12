@@ -114,13 +114,6 @@ body {
   align-items: center;
 }
 
-.tile__icon {
-  display: block;
-  flex: none;
-  width: 32px;
-  height: 32px;
-}
-
 .tile__template {
   display: none;
 }

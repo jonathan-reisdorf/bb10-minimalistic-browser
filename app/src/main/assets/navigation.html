@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
     <title>BB10 Minimal Browser - Navigation</title>
 </head>
 <body>
@@ -13,32 +14,21 @@
 </div>
 <form class="navigation js-navigationForm" action="javascript:void(0)">
     <button type="button" class="navigation__action js-navigationAction" data-action="toggleTabsOverview" data-toggle="true">
-        <svg class="navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-            <path d="M24.41 32H0V7.59h24.41zM1.63 30.37h21.15V9.22H1.63z"/>
-            <path d="M32 24.41h-6.24v-1.63h4.61V1.63H9.22v4.61H7.59V0H32v24.41zm-10.58 0H7.59V10.58h1.63v12.2h12.2v1.63z"/>
-        </svg>
+        <span class="icon icon--tabs"></span>
     </button>
 
     <button type="button" class="navigation__action navigation__action--hideableIcon navigation__action--hidden js-navigationAction" data-action="goPrev">
-        <svg class="navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
-            <path d="M5 11.5L15.035 1 16 2.008 6.93 11.5 16 20.99 15.035 22z"/>
-        </svg>
+        <span class="icon icon--previous"></span>
     </button>
 
     <input class="navigation__url js-navigationUrl" type="text" value="" placeholder="URL / &#x1F50E;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
 
     <button type="button" class="navigation__action navigation__action--hideableIcon navigation__action--hidden js-navigationAction" data-action="goNext">
-        <svg class="navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
-            <path d="M7 2.008l9.07 9.491L7 20.99 7.965 22 18 11.5 7.965 1z"/>
-        </svg>
+        <span class="icon icon--next"></span>
     </button>
 
     <button type="button" class="navigation__action js-navigationAction" data-action="toggleContext" data-toggle="true">
-        <svg class="navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
-            <circle cx="11.5" cy="20" r="1.5"/>
-            <circle cx="11.5" cy="11.5" r="1.5"/>
-            <circle cx="11.5" cy="3" r="1.5"/>
-        </svg>
+        <span class="icon icon--context"></span>
     </button>
 
     <input type="submit" style="display: none">
