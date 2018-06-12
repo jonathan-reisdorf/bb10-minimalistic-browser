@@ -29,6 +29,28 @@ body {
     margin: 0;
 }
 
+.tiles__headline {
+  display: flex;
+  flex-flow: row nowrap;
+  background: linear-gradient(to bottom, #222 0%, #000 100%);
+  padding: 1em;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+
+.tiles__headlineIcon {
+  display: block;
+  flex: none;
+  margin-right: 0.6em;
+}
+
+.tiles__headlineText {
+  display: block;
+  flex: 1;
+  height: 1em;
+  line-height: 1em;
+}
+
 .tile {
   display: block;
   flex: none;

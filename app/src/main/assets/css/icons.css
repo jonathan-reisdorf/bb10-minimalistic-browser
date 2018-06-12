@@ -14,6 +14,12 @@
   background-size: 32px;
 }
 
+.icon--textSize {
+  width: 1em;
+  height: 1em;
+  background-size: 1em;
+}
+
 .icon--context {
   background-image: url("data:image/svg+xml;charset=utf8,<svg fill='#fff' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 23'><circle cx='12' cy='20' r='1.5'/><circle cx='12' cy='11.5' r='1.5'/><circle cx='12' cy='3' r='1.5'/></svg>");
 }
