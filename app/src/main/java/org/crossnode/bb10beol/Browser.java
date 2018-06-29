@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
-import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoView;
 
 
@@ -18,7 +17,7 @@ public class Browser {
     private LinearLayout mainLayout;
 
     //private BrowserTabManager browserTabManager;
-    private View navigationView;
+    private GeckoView navigationView;
     //private BrowserResourceClient navigationResourceClient;
 
     private String navigationFileUrl = "file:///android_asset/navigation.html";
@@ -28,31 +27,25 @@ public class Browser {
         this.mainLayout = (LinearLayout) mainLayout;
     }
 
-    private void _initializeRuntime() {
+    private GeckoRuntime _initializeRuntime() {
         GeckoRuntimeSettings.Builder settingsBuilder = new GeckoRuntimeSettings.Builder();
         settingsBuilder.javaScriptEnabled(true);
-        settingsBuilder.remoteDebuggingEnabled(true);
+        settingsBuilder.remoteDebuggingEnabled(false);
         settingsBuilder.webFontsEnabled(true);
 
         GeckoRuntimeSettings settings = settingsBuilder.build();
-        GeckoRuntime runtime = GeckoRuntime.create(activity.getApplicationContext());
+        return GeckoRuntime.create(activity.getApplicationContext(), settings);
     }
 
     public void initialize(String url) {
-        _initializeRuntime();
-        //GeckoRuntime runtime = new GeckoRuntime();
-        //runtime.attachTo(activity);
-        // XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
+        GeckoRuntime runtime = _initializeRuntime();
 
         mainLayout.setOrientation(LinearLayout.VERTICAL);
         mainLayout.setBackgroundColor(Color.BLACK);
 
+        BrowserTabSession navigationSession = new BrowserTabSession(runtime);
         navigationView = new GeckoView(activity);
-        //GeckoSession session = new GeckoSession();
-        //session.open(runtime);
-        //navigationView.setSession(session);
-        //navigationView.setSession(new BrowserTabSession(runtime));
-        // BrowserTabSession
+        navigationView.setSession(navigationSession);
 
         //browserTabManager = new BrowserTabManager(activity, mainLayout, navigationWebView);
         //XWalkView xWalkWebView = browserTabManager.initialize(url);
@@ -67,13 +60,15 @@ public class Browser {
         //navigationWebView.addJavascriptInterface(new NavigationConvenienceJsInterface(activity), "navigationConvenience");
         //navigationWebView.loadUrl(navigationFileUrl);
 
+        navigationSession.loadUri("http://html5test.com");
+
         int navigationHeight = 40;
         navigationHeight = (int) (navigationHeight * Resources.getSystem().getDisplayMetrics().density);
-        navigationView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, navigationHeight, (float) 0));
+        //navigationView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, navigationHeight, (float) 0));
 
         //mainLayout.addView(xWalkWebView);
 
-        //mainLayout.addView(navigationView);
+        mainLayout.addView(navigationView);
     }
 
     public void onResume() {
