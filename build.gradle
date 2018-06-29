@@ -1,17 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+    ext.geckoRelease = [
+        // mozilla-release: FENNEC_61_0_RELEASE
+        revision: '785d242a5b01d5f1094882aa2144d8e5e2791e06',
+        version: '61.0.20180621125625'
+    ]
+
+    ext.build = [
+        compileSdkVersion: 18,
+        targetSdkVersion: 18,
+        minSdkVersion: 18
+    ]
+
+    ext.library = [
+        version: '0.12'
+    ]
+
     repositories {
         google()
         jcenter()
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
-        
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.3'
     }
 }
 
@@ -19,6 +31,16 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        // arm
+        maven {
+            url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-release.revision.${geckoRelease['revision']}.mobile.android-api-16-opt/artifacts/public/android/maven"
+        }
+
+        // x86
+        maven {
+            url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-release.revision.${geckoRelease['revision']}.mobile.android-x86-opt/artifacts/public/android/maven"
+        }
     }
 }
 

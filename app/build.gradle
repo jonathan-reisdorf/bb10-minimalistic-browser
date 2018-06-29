@@ -1,35 +1,51 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 18
+    buildToolsVersion '27.0.3'
+
     defaultConfig {
         applicationId "org.crossnode.bb10beol"
-        minSdkVersion 18
-        targetSdkVersion 18
+        minSdkVersion rootProject.ext.build['minSdkVersion']
+        targetSdkVersion rootProject.ext.build['targetSdkVersion']
         versionCode 12
         versionName "1.6.1"
     }
+
     buildTypes {
         debug {
             ndk {
-                abiFilters "armeabi-v7a", "armeabi", "x86"
+                abiFilters "armeabi-v7a"
             }
         }
         release {
             minifyEnabled false
             proguardFiles 'proguard-rules.pro'
             ndk {
-                abiFilters "armeabi-v7a", "armeabi"
+                abiFilters "armeabi-v7a"
             }
         }
     }
-    buildToolsVersion '27.0.3'
+
+    flavorDimensions "abi"
+
     productFlavors {
+        arm {
+            dimension "abi"
+        }
     }
+}
+
+configurations {
+    armImplementation {}
+    x86Implementation {}
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation project(':crosswalk')
+    implementation "org.mozilla:geckoview-release-armeabi-v7a:${rootProject.ext.geckoRelease['version']}"
+    //x86Implementation "org.mozilla:geckoview-release-x86:${rootProject.ext.geckoRelease['version']}"
+    //implementation "org.mozilla:geckoview-release-x86:${rootProject.ext.geckoRelease['version']}"
+    implementation 'com.android.support:support-annotations:+'
+    implementation 'com.android.support:support-v4:18.0.0'
 }
