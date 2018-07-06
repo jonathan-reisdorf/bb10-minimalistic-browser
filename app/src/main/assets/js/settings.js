@@ -2,6 +2,7 @@ class BB10BrowserSettings {
   constructor() {
     this._elements = [...document.querySelectorAll('.js-setting')];
     this._conditionalElements = [...document.querySelectorAll('.js-settingConditional')];
+    this._calculatedSettings = [...document.querySelectorAll('.js-settingCalculated')];
     this._initialize();
   }
 
@@ -17,8 +18,25 @@ class BB10BrowserSettings {
       'search.engine': 'ddg',
       'navigation.homepage.type': 'bookmarks',
       'navigation.homepage.url': '',
-      'navigation.autopaste': false
+      'navigation.autopaste': false,
+      'navigation.userAgent.type': 'default',
+      'navigation.userAgent.custom': '',
+      'navigation.userAgent.presets': {
+        chromeMobile: 'Mozilla/5.0 (Linux; Android 4.3; Passport Build/10.3.3.213) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3452.0 Mobile Safari/537.36',
+        chromeDesktop: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
+        firefoxDesktop: 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'
+      }
     };
+  }
+
+  get userAgent() {
+    const type = this.get('navigation.userAgent.type');
+
+    if (type === 'custom') {
+      return this.get('navigation.userAgent.custom');
+    }
+
+    return this.get('navigation.userAgent.presets')[type] || navigator.userAgent;
   }
 
   _initialize() {
@@ -35,20 +53,32 @@ class BB10BrowserSettings {
       el.addEventListener('change', () => {
         this.set(key, this.getElValue(el));
         this._updateConditionalSettings();
+        this._updateCalculatedSettings();
       });
       el.classList.remove('setting--uninitialized');
     });
 
     this._updateConditionalSettings();
+    this._updateCalculatedSettings();
   }
 
   _updateConditionalSettings() {
     this._conditionalElements.forEach(el => {
-      const expectedValue = el.dataset.settingConditionalValue;
       const actualValue = this.get(el.dataset.settingConditionalKey);
+      let expectedValue = el.dataset.settingConditionalValue;
+      const isNegation = expectedValue.charAt(0) === '!';
+      expectedValue = isNegation ? expectedValue.slice(1) : expectedValue;
 
-      el.classList[expectedValue === actualValue ? 'remove' : 'add']('setting--hidden');
+      const isConditionMet = (expectedValue === actualValue) !== isNegation;
+      el.classList[isConditionMet ? 'remove' : 'add']('setting--hidden');
       el.classList.remove('setting--uninitialized');
+    });
+  }
+
+  _updateCalculatedSettings() {
+    this._calculatedSettings.forEach(el => {
+      const getterFn = el.dataset.settingCalculate;
+      el.innerHTML = this[getterFn];
     });
   }
 

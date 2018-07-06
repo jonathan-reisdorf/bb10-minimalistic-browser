@@ -48,7 +48,7 @@ class BB10BrowserTabs {
   }
 
   addTab(event) {
-    tabs.addTab('about:blank');
+    tabs.addTab('about:blank', browserSettings.userAgent);
   }
 
   _getTabByEvent(event) {

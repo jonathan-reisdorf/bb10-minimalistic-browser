@@ -20,6 +20,7 @@
             </select>
         </div>
     </div>
+
     <div class="menu__item">
         <span class="menu__left menu__text">Homepage</span>
         <div class="menu__right">
@@ -36,6 +37,7 @@
             <input type="url" class="setting setting--uninitialized setting--input setting--full js-setting" data-setting="navigation.homepage.url" placeholder="URL">
         </div>
     </div>
+
     <div class="menu__item">
         <span class="menu__left menu__text">URL auto-paste</span>
         <label class="menu__right">
@@ -47,6 +49,32 @@
             (content other than a URL is ignored, overrides homepage setting).<br>
             When disabled (default setting), the clipboard is not read.
         </div>
+    </div>
+
+    <div class="menu__item">
+        <span class="menu__left menu__text">User agent type</span>
+        <div class="menu__right">
+            <select class="setting setting--uninitialized setting--dropdown js-setting" data-setting="navigation.userAgent.type">
+                <option value="default">Default (crosswalk 24)</option>
+                <option value="chromeMobile">Chrome 69 Mobile (Android 4.3)</option>
+                <option value="chromeDesktop">Chrome 64 Desktop (Ubuntu)</option>
+                <option value="firefoxDesktop">Firefox 61 Desktop (Ubuntu)</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+    </div>
+    <div class="menu__item setting--uninitialized js-settingConditional" data-setting-conditional-key="navigation.userAgent.type" data-setting-conditional-value="custom">
+        <span class="menu__left menu__text">User agent custom string</span>
+        <div class="menu__right">
+            <input type="text" class="setting setting--uninitialized setting--input setting--full js-setting" data-setting="navigation.userAgent.custom">
+        </div>
+    </div>
+    <div class="menu__item setting--uninitialized js-settingConditional" data-setting-conditional-key="navigation.userAgent.type" data-setting-conditional-value="!custom">
+        <span class="menu__left menu__text">User agent string</span>
+        <div class="menu__right menu__hint js-settingCalculated" data-setting-calculate="userAgent"></div>
+    </div>
+    <div class="menu__item menu__hint">
+        Please note that changing the user agent only affects newly opened tabs.
     </div>
 </div>
 

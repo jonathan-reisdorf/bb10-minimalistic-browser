@@ -31,6 +31,16 @@ class NavigationJsInterface {
     }
 
     @JavascriptInterface
+    public void setUserAgentString(final String userAgentString) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                browserTabManager.currentTab.setUserAgentString(userAgentString);
+            }
+        });
+    }
+
+    @JavascriptInterface
     public void showTabsOverview() {
         activity.runOnUiThread(new Runnable() {
             @Override
