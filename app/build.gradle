@@ -6,7 +6,7 @@ android {
         applicationId "org.crossnode.bb10beol"
         minSdkVersion 18
         targetSdkVersion 18
-        versionCode 12
+        versionCode 13
         versionName "1.7.0"
     }
     buildTypes {
