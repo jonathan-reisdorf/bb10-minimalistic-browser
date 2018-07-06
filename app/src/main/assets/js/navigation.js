@@ -345,4 +345,9 @@ class BB10BrowserNavigation {
 }
 
 const browserNavigation = new BB10BrowserNavigation();
+
+if (browserSettings.get('navigation.userAgent.type') !== 'default') {
+  navigation.setUserAgentString(browserSettings.userAgent);
+}
+
 browserNavigation.openUrl(browserNavigation.defaultUrl);

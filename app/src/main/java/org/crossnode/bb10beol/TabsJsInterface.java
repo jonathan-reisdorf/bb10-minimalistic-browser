@@ -30,12 +30,12 @@ class TabsJsInterface {
     }
 
     @JavascriptInterface
-    public void addTab(final String url) {
+    public void addTab(final String url, final String userAgent) {
         _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 _browserTabManager.closeSystemTab();
-                _browserTabManager.addTab(url);
+                _browserTabManager.addTab(url, userAgent, false, true);
             }
         });
     }
