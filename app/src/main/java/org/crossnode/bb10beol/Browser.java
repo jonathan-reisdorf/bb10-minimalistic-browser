@@ -6,20 +6,14 @@ import android.graphics.Color;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
-import org.xwalk.core.XWalkView;
-import org.xwalk.core.XWalkCookieManager;
-// import org.xwalk.core.XWalkPreferences;
-
+import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.ContentView;
+import org.chromium.chrome.browser.WebContentsFactory;
+import org.chromium.content_public.browser.WebContents;
 
 public class Browser {
     private Activity activity;
     private LinearLayout mainLayout;
-
-    private BrowserTabManager browserTabManager;
-    private XWalkView navigationWebView;
-    private BrowserResourceClient navigationResourceClient;
-
-    private String navigationFileUrl = "file:///android_asset/navigation.html";
 
     Browser(Activity activity, LinearLayout mainLayout) {
         this.activity = activity;
@@ -27,34 +21,14 @@ public class Browser {
     }
 
     public void initialize(String url) {
-        // XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
-
         mainLayout.setOrientation(LinearLayout.VERTICAL);
         mainLayout.setBackgroundColor(Color.BLACK);
 
-        navigationWebView = new XWalkView(activity);
-        browserTabManager = new BrowserTabManager(activity, mainLayout, navigationWebView);
-        XWalkView xWalkWebView = browserTabManager.initialize(url);
-
-        XWalkCookieManager mCookieManager = new XWalkCookieManager();
-        mCookieManager.setAcceptCookie(true);
-        mCookieManager.setAcceptFileSchemeCookies(true);
-
-        navigationResourceClient = new BrowserResourceClient(navigationWebView, navigationWebView);
-        navigationWebView.setResourceClient(navigationResourceClient);
-        navigationWebView.addJavascriptInterface(new NavigationJsInterface(activity, browserTabManager), "navigation");
-        navigationWebView.addJavascriptInterface(new NavigationConvenienceJsInterface(activity), "navigationConvenience");
-        navigationWebView.loadUrl(navigationFileUrl);
-
-        int navigationHeight = 40;
-        navigationHeight = (int) (navigationHeight * Resources.getSystem().getDisplayMetrics().density);
-        navigationWebView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, navigationHeight, (float) 0));
-
-        mainLayout.addView(xWalkWebView);
-        mainLayout.addView(navigationWebView);
+        WebContents webContents = WebContentsFactory.createWebContents(false, false);
+        ContentViewCore contentViewCore = ContentViewCore.fromWebContents(webContents);
+        ContentView contentView = ContentView.createContentView(activity, contentViewCore);
     }
 
     public void onResume() {
-        navigationResourceClient.triggerJavascriptHandler("onApplicationResume", null);
     }
 }

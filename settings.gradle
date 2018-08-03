@@ -1,2 +1,6 @@
 include ':app'
-include ':crosswalk'
+include ':libraries:ui_res'
+include ':libraries:content_res'
+include ':libraries:delegate_res'
+include ':libraries:autofill_res'
+include ':libraries:media_res'

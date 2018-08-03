@@ -1,18 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 18
+    compileSdkVersion 27
     defaultConfig {
         applicationId "org.crossnode.bb10beol"
         minSdkVersion 18
         targetSdkVersion 18
         versionCode 14
         versionName "1.7.1"
+        multiDexEnabled true
     }
     buildTypes {
         debug {
             ndk {
-                abiFilters "armeabi-v7a", "x86"
+                abiFilters "armeabi-v7a"
             }
         }
         release {
@@ -34,5 +35,17 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':crosswalk')
+    implementation 'com.android.support:support-annotations:+'
+    implementation 'com.android.support:support-v4:18.0.0'
+    implementation 'com.android.support:multidex:1.0.3'
+    //implementation 'com.android.support:recyclerview-v7:25.3.1'
+    //implementation 'com.android.support:design:25.3.1'
+    //implementation 'com.android.support:gridlayout-v7:25.3.1'
+    //implementation 'com.android.support:support-v13:25.3.1'
+    //implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation project(':libraries:ui_res')
+    implementation project(':libraries:content_res')
+    implementation project(':libraries:delegate_res')
+    implementation project(':libraries:autofill_res')
+    implementation project(':libraries:media_res')
 }

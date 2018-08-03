@@ -15,13 +15,13 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         LinearLayout mainLayout = (LinearLayout) this.findViewById(R.id.mainLayout);
         browser = new Browser(this, mainLayout);
-        browser.initialize(null);
+        browser.initialize("https://www.google.de/");
         //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        browser.onResume();
+        // browser.onResume();
     }
 }
