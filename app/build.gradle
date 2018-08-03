@@ -48,4 +48,5 @@ dependencies {
     implementation project(':libraries:delegate_res')
     implementation project(':libraries:autofill_res')
     implementation project(':libraries:media_res')
+    implementation project(':libraries:chrome_res')
 }

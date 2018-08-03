@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentView;
-import org.chromium.chrome.browser.WebContentsFactory;
+import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.content_public.browser.WebContents;
 
 public class Browser {
@@ -24,7 +24,7 @@ public class Browser {
         mainLayout.setOrientation(LinearLayout.VERTICAL);
         mainLayout.setBackgroundColor(Color.BLACK);
 
-        WebContents webContents = WebContentsFactory.createWebContents(false, false);
+        WebContents webContents = WarmupManager.getInstance().takeSpareWebContents(false, false);
         ContentViewCore contentViewCore = ContentViewCore.fromWebContents(webContents);
         ContentView contentView = ContentView.createContentView(activity, contentViewCore);
     }

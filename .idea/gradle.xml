@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/autofill_res" />
+            <option value="$PROJECT_DIR$/libraries/chrome_res" />
             <option value="$PROJECT_DIR$/libraries/content_res" />
             <option value="$PROJECT_DIR$/libraries/delegate_res" />
             <option value="$PROJECT_DIR$/libraries/media_res" />
