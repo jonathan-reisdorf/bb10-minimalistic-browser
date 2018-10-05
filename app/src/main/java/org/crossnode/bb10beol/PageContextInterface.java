@@ -1,7 +1,5 @@
 package org.crossnode.bb10beol;
 
-import android.app.Activity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,14 +7,14 @@ import org.xwalk.core.JavascriptInterface;
 
 
 public class PageContextInterface {
-    private Activity _activity;
+    private MainActivity _activity;
     private BrowserTabManager _browserTabManager;
     private BrowserResourceClient _resourceClient;
 
     private String _title;
     private String _url;
 
-    PageContextInterface(Activity activity, BrowserTabManager browserTabManager) {
+    PageContextInterface(MainActivity activity, BrowserTabManager browserTabManager) {
         _activity = activity;
         _browserTabManager = browserTabManager;
         _resourceClient = browserTabManager.previousResourceClient;

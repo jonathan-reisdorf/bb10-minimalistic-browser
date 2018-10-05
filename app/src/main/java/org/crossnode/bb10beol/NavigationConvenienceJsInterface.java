@@ -1,6 +1,5 @@
 package org.crossnode.bb10beol;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.ClipboardManager;
 import android.content.ClipData;
@@ -10,10 +9,10 @@ import org.xwalk.core.JavascriptInterface;
 
 public class NavigationConvenienceJsInterface {
     private boolean _isEnabled = false;
-    private Activity _activity;
+    private MainActivity _activity;
     private String _clipboardText = null;
 
-    NavigationConvenienceJsInterface(Activity activity) {
+    NavigationConvenienceJsInterface(MainActivity activity) {
         _activity = activity;
     }
 

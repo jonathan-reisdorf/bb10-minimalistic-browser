@@ -1,7 +1,5 @@
 package org.crossnode.bb10beol;
 
-import android.app.Activity;
-
 import org.json.JSONArray;
 
 import org.xwalk.core.JavascriptInterface;
@@ -9,11 +7,11 @@ import org.xwalk.core.XWalkView;
 
 
 class TabsJsInterface {
-    private Activity _activity;
+    private MainActivity _activity;
     private XWalkView _webview;
     private BrowserTabManager _browserTabManager;
 
-    TabsJsInterface(Activity activity, XWalkView webview, BrowserTabManager browserTabManager) {
+    TabsJsInterface(MainActivity activity, XWalkView webview, BrowserTabManager browserTabManager) {
         this._activity = activity;
         this._webview = webview;
         this._browserTabManager = browserTabManager;

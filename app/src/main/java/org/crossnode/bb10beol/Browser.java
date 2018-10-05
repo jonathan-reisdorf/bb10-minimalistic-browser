@@ -1,6 +1,5 @@
 package org.crossnode.bb10beol;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.ViewGroup.LayoutParams;
@@ -12,16 +11,18 @@ import org.xwalk.core.XWalkCookieManager;
 
 
 public class Browser {
-    private Activity activity;
+    public boolean isInitialized = false;
+
+    private MainActivity activity;
     private LinearLayout mainLayout;
 
-    private BrowserTabManager browserTabManager;
+    private BrowserTabManager tabManager;
     private XWalkView navigationWebView;
     private BrowserResourceClient navigationResourceClient;
 
     private String navigationFileUrl = "file:///android_asset/navigation.html";
 
-    Browser(Activity activity, LinearLayout mainLayout) {
+    Browser(MainActivity activity, LinearLayout mainLayout) {
         this.activity = activity;
         this.mainLayout = mainLayout;
     }
@@ -33,8 +34,8 @@ public class Browser {
         mainLayout.setBackgroundColor(Color.BLACK);
 
         navigationWebView = new XWalkView(activity);
-        browserTabManager = new BrowserTabManager(activity, mainLayout, navigationWebView);
-        XWalkView xWalkWebView = browserTabManager.initialize(url);
+        tabManager = new BrowserTabManager(activity, mainLayout, navigationWebView);
+        XWalkView xWalkWebView = tabManager.initialize(url);
 
         XWalkCookieManager mCookieManager = new XWalkCookieManager();
         mCookieManager.setAcceptCookie(true);
@@ -42,7 +43,7 @@ public class Browser {
 
         navigationResourceClient = new BrowserResourceClient(navigationWebView, navigationWebView);
         navigationWebView.setResourceClient(navigationResourceClient);
-        navigationWebView.addJavascriptInterface(new NavigationJsInterface(activity, browserTabManager), "navigation");
+        navigationWebView.addJavascriptInterface(new NavigationJsInterface(activity, tabManager), "navigation");
         navigationWebView.addJavascriptInterface(new NavigationConvenienceJsInterface(activity), "navigationConvenience");
         navigationWebView.loadUrl(navigationFileUrl);
 
@@ -52,6 +53,7 @@ public class Browser {
 
         mainLayout.addView(xWalkWebView);
         mainLayout.addView(navigationWebView);
+        isInitialized = true;
     }
 
     public void onResume() {

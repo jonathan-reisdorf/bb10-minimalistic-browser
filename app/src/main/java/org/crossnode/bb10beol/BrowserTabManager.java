@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.xwalk.core.XWalkNavigationItem;
 import org.xwalk.core.XWalkView;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
@@ -23,12 +22,12 @@ public class BrowserTabManager {
     public BrowserResourceClient currentResourceClient = null;
     public BrowserResourceClient previousResourceClient = null;
 
-    private Activity activity;
+    private MainActivity activity;
     private LinearLayout mainLayout;
     private XWalkView navigationWebView;
 
 
-    BrowserTabManager(Activity activity, LinearLayout mainLayout, XWalkView navigationWebView) {
+    BrowserTabManager(MainActivity activity, LinearLayout mainLayout, XWalkView navigationWebView) {
         this.activity = activity;
         this.mainLayout = mainLayout;
         this.navigationWebView = navigationWebView;
@@ -48,9 +47,11 @@ public class BrowserTabManager {
 
     public XWalkView addTab(String url, String customUserAgentString, boolean systemTab, boolean openTab) {
         XWalkView xWalkWebView = new XWalkView(activity);
+
         BrowserResourceClient browserResourceClient = new BrowserResourceClient(xWalkWebView, navigationWebView);
 
         xWalkWebView.setResourceClient(browserResourceClient);
+        xWalkWebView.setUIClient(new BrowserUIClient(activity, xWalkWebView));
         xWalkWebView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, (float) 1));
 
         if (customUserAgentString != null && !customUserAgentString.equals("")) {
