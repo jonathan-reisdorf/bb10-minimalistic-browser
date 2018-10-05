@@ -1,30 +1,28 @@
 package org.crossnode.bb10beol;
 
-import android.app.Activity;
-
 import org.xwalk.core.XWalkView;
 import org.xwalk.core.JavascriptInterface;
 
 
 class NavigationJsInterface {
-    private Activity activity;
-    private BrowserTabManager browserTabManager;
+    private MainActivity _activity;
+    private BrowserTabManager _browserTabManager;
     private String tabsOverviewFileUrl = "file:///android_asset/tabs.html";
     private String contextMenuFileUrl = "file:///android_asset/context.html";
 
-    NavigationJsInterface(Activity activity, BrowserTabManager browserTabManager) {
-        this.activity = activity;
-        this.browserTabManager = browserTabManager;
+    NavigationJsInterface(MainActivity activity, BrowserTabManager browserTabManager) {
+        _activity = activity;
+        _browserTabManager = browserTabManager;
     }
 
     @JavascriptInterface
     public void openUrl(final String url) {
-        activity.runOnUiThread(new Runnable() {
+        _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!browserTabManager.currentResourceClient.isSystem) {
+                if (!_browserTabManager.currentResourceClient.isSystem) {
                     // TODO load on previous/non-system/new tab in that case!
-                    browserTabManager.load(url);
+                    _browserTabManager.load(url);
                 }
             }
         });
@@ -32,62 +30,62 @@ class NavigationJsInterface {
 
     @JavascriptInterface
     public void setUserAgentString(final String userAgentString) {
-        activity.runOnUiThread(new Runnable() {
+        _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                browserTabManager.currentTab.setUserAgentString(userAgentString);
+                _browserTabManager.currentTab.setUserAgentString(userAgentString);
             }
         });
     }
 
     @JavascriptInterface
     public void showTabsOverview() {
-        activity.runOnUiThread(new Runnable() {
+        _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                XWalkView webview = browserTabManager.addTab(tabsOverviewFileUrl, true);
-                webview.addJavascriptInterface(new TabsJsInterface(activity, webview, browserTabManager), "tabs");
+                XWalkView webview = _browserTabManager.addTab(tabsOverviewFileUrl, true);
+                webview.addJavascriptInterface(new TabsJsInterface(_activity, webview, _browserTabManager), "tabs");
             }
         });
     }
 
     @JavascriptInterface
     public void showContextMenu() {
-        activity.runOnUiThread(new Runnable() {
+        _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                XWalkView webview = browserTabManager.addTab(contextMenuFileUrl, true);
-                webview.addJavascriptInterface(new PageContextInterface(activity, browserTabManager), "pageContext");
+                XWalkView webview = _browserTabManager.addTab(contextMenuFileUrl, true);
+                webview.addJavascriptInterface(new PageContextInterface(_activity, _browserTabManager), "pageContext");
             }
         });
     }
 
     @JavascriptInterface
     public void closeSystemTab() {
-        activity.runOnUiThread(new Runnable() {
+        _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                browserTabManager.closeSystemTab();
+                _browserTabManager.closeSystemTab();
             }
         });
     }
 
     @JavascriptInterface
     public void goPrev() {
-        activity.runOnUiThread(new Runnable() {
+        _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                browserTabManager.currentResourceClient.goPrev();
+                _browserTabManager.currentResourceClient.goPrev();
             }
         });
     }
 
     @JavascriptInterface
     public void goNext() {
-        activity.runOnUiThread(new Runnable() {
+        _activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                browserTabManager.currentResourceClient.goNext();
+                _browserTabManager.currentResourceClient.goNext();
             }
         });
     }
