@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline';">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
+    <link rel="stylesheet" type="text/css" href="css/form.css">
+    <link rel="stylesheet" type="text/css" href="css/setting.css">
+    <title>BB10 Minimal Browser - Security</title>
+</head>
+<body>
+<div class="menu">
+    <div class="menu__item">
+        <span class="menu__left">
+            <button type="button" class="form__button form__button--cta">Clear cache</button>
+        </span>
+        <div class="menu__right">
+            <button type="button" class="form__button form__button--cta">Clear cookies</button>
+        </div>
+    </div>
+
+    <div class="menu__item">
+        <span class="menu__left menu__text">Accept cookies</span>
+        <label class="menu__right">
+            <input type="checkbox" class="setting setting--uninitialized setting--checkbox js-setting" data-setting="security.acceptCookies">
+            <span class="setting__switch"></span>
+        </label>
+    </div>
+
+    <div class="menu__item">
+        <span class="menu__left menu__text">Accepted protocols</span>
+        <div class="menu__right">
+            <select class="setting setting--uninitialized setting--dropdown setting--full-inline js-setting" data-setting="security.acceptedProtocols.type">
+                <option value="all">All</option>
+                <option value="common">Common (https, http, file)</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+    </div>
+    <div class="menu__item setting--uninitialized js-settingConditional" data-setting-conditional-key="security.acceptedProtocols.type" data-setting-conditional-value="custom">
+        <span class="menu__left menu__text">Custom protocols</span>
+        <div class="menu__right">
+            <textarea class="setting setting--uninitialized setting--input setting--textarea setting--full js-setting" data-setting="security.acceptedProtocols.custom" data-setting-multiline="true" placeholder="one per line"></textarea>
+        </div>
+        <div class="menu__help">
+            One per line<br>
+            System views (tabs, bookmarks, context menu, settings) always have access to file://
+        </div>
+    </div>
+
+    <div class="menu__item">
+        <span class="menu__left menu__text">Remote debugging</span>
+        <label class="menu__right">
+            <input type="checkbox" class="setting setting--uninitialized setting--checkbox js-setting" data-setting="security.remoteDebugging">
+            <span class="setting__switch"></span>
+        </label>
+        <div class="menu__help">
+            You need to restart BEOL for this setting to take effect.
+        </div>
+    </div>
+</div>
+
+<div class="messages js-messages"></div>
+
+<script type="text/javascript" src="js/settings.js"></script>
+</body>
+</html>

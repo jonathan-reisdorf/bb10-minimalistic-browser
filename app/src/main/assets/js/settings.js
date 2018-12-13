@@ -25,7 +25,11 @@ class BB10BrowserSettings {
         chromeMobile: 'Mozilla/5.0 (Linux; Android 4.3; Passport Build/10.3.3.213) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3452.0 Mobile Safari/537.36',
         chromeDesktop: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36',
         firefoxDesktop: 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'
-      }
+      },
+      'security.acceptCookies': true,
+      'security.acceptedProtocols.type': 'all',
+      'security.acceptedProtocols.custom': ['https', 'http', 'file'],
+      'security.remoteDebugging': false
     };
   }
 
@@ -82,12 +86,35 @@ class BB10BrowserSettings {
     });
   }
 
+  isMultiline(el) {
+    return !!el.dataset.settingMultiline;
+  }
+
+  getMultilineValue(el, value) {
+    if (!this.isMultiline(el)) {
+      return value;
+    }
+
+    return value
+      .split("\n")
+      .map(line => line.trim().toLowerCase())
+      .filter(line => line);
+  }
+
+  setMultilineValue(el, value) {
+    if (!this.isMultiline(el)) {
+      return value;
+    }
+
+    return value.join("\n");
+  }
+
   setElValue(el, value) {
-    el.type === 'checkbox' ? el.checked = !!value : el.value = value;
+    el.type === 'checkbox' ? el.checked = !!value : el.value = this.setMultilineValue(el, value);
   }
 
   getElValue(el) {
-    return el.type === 'checkbox' ? !!el.checked : el.value;
+    return el.type === 'checkbox' ? !!el.checked : this.getMultilineValue(el, el.value);
   }
 
   update() {
