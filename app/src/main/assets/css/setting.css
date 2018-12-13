@@ -18,8 +18,18 @@
   touch-callout: default;
 }
 
+.setting--textarea {
+  resize: none;
+  height: 4em;
+}
+
 .setting--full {
   display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.setting--full-inline {
   width: 100%;
   box-sizing: border-box;
 }
